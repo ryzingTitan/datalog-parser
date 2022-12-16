@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: production
+  application:
+    name: titan-dl-parser
+
+---
+spring:
+  config:
+    activate:
+      on-profile: production
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: dataLogging
+
+---
+spring:
+  config:
+    activate:
+      on-profile: cucumber
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: cucumberTest

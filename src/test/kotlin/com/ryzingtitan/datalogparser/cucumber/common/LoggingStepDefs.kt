@@ -14,12 +14,17 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.slf4j.LoggerFactory
 
 class LoggingStepDefs {
-    @DataTableType
-    fun mapLogMessage(tableRow: Map<String, String>): LogMessage {
-        return LogMessage(
-            level = tableRow["level"].toString(),
-            message = tableRow["message"].toString()
-        )
+    @Then("the application will log the following messages:")
+    fun thenTheApplicationWilLogTheFollowingMessages(table: DataTable) {
+        val expectedLogMessages: List<LogMessage> = table.tableConverter.toList(table, LogMessage::class.java)
+
+        val actualLogMessages = mutableListOf<LogMessage>()
+
+        appender.list.forEach {
+            actualLogMessages.add(LogMessage(it.level.levelStr, it.message))
+        }
+
+        assertEquals(expectedLogMessages.sortedBy { it.message }, actualLogMessages.sortedBy { it.message })
     }
 
     @Before
@@ -30,22 +35,17 @@ class LoggingStepDefs {
         appender.start()
     }
 
-    @Then("the application will log the following messages:")
-    fun theApplicationWilLogTheFollowingMessages(table: DataTable) {
-        val expectedLogMessages: List<LogMessage> = table.tableConverter.toList(table, LogMessage::class.java)
-
-        val actualLogMessages = ArrayList<LogMessage>()
-
-        appender.list.forEach {
-            actualLogMessages.add(LogMessage(it.level.levelStr, it.message))
-        }
-
-        assertEquals(expectedLogMessages.sortedBy { it.message }, actualLogMessages.sortedBy { it.message })
-    }
-
     @After
     fun teardown() {
         appender.stop()
+    }
+
+    @DataTableType
+    fun mapLogMessage(tableRow: Map<String, String>): LogMessage {
+        return LogMessage(
+            level = tableRow["level"].toString(),
+            message = tableRow["message"].toString()
+        )
     }
 
     private lateinit var consoleLogger: Logger

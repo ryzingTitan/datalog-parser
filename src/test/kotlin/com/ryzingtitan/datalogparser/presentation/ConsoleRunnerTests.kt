@@ -11,7 +11,7 @@ import org.mockito.kotlin.verify
 class ConsoleRunnerTests {
     @BeforeEach
     fun setup() {
-        consoleRunner = ConsoleRunner(mockReportingService)
+        consoleRunner = ConsoleRunner(mockParsingService)
     }
 
     @Nested
@@ -20,11 +20,11 @@ class ConsoleRunnerTests {
         fun `runs the report`() {
             consoleRunner.run()
 
-            verify(mockReportingService, times(1)).parse()
+            verify(mockParsingService, times(1)).parse()
         }
     }
 
     private lateinit var consoleRunner: ConsoleRunner
 
-    private val mockReportingService = mock<ParsingService>()
+    private val mockParsingService = mock<ParsingService>()
 }

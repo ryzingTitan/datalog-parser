@@ -4,8 +4,8 @@ import com.ryzingtitan.datalogparser.domain.services.ParsingService
 import io.cucumber.java.en.When
 
 class ConsoleRunnerStepDefs(private val parsingService: ParsingService) {
-    @When("a user runs the console application")
-    fun aUserRunsTheConsoleApplication() {
+    @When("the file is parsed")
+    fun whenTheFileIsParsed() {
         parsingService.parse()
     }
 }

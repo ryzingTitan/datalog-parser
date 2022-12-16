@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
 @Component
-@Profile("!cucumber-test")
+@Profile("!cucumber")
 class ConsoleRunner(private val parsingService: ParsingService) : CommandLineRunner {
     override fun run(vararg args: String?) {
         parsingService.parse()

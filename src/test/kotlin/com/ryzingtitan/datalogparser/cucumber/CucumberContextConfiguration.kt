@@ -5,7 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 
 @CucumberContextConfiguration
-@ActiveProfiles("cucumber-test")
+@ActiveProfiles("cucumber")
 @SpringBootTest(
     classes = [com.ryzingtitan.datalogparser.DatalogParserApplication::class]
 )
