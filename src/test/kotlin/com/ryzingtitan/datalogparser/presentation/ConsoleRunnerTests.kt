@@ -1,6 +1,6 @@
 package com.ryzingtitan.datalogparser.presentation
 
-import com.ryzingtitan.datalogparser.domain.parsing.ParsingService
+import com.ryzingtitan.datalogparser.domain.parsing.FileParsingService
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -13,7 +13,7 @@ import org.mockito.kotlin.verify
 class ConsoleRunnerTests {
     @BeforeEach
     fun setup() {
-        consoleRunner = ConsoleRunner(mockParsingService)
+        consoleRunner = ConsoleRunner(mockFileParsingService)
     }
 
     @Nested
@@ -22,11 +22,11 @@ class ConsoleRunnerTests {
         fun `starts the parsing process`() {
             consoleRunner.run()
 
-            verify(mockParsingService, times(1)).parse()
+            verify(mockFileParsingService, times(1)).parse()
         }
     }
 
     private lateinit var consoleRunner: ConsoleRunner
 
-    private val mockParsingService = mock<ParsingService>()
+    private val mockFileParsingService = mock<FileParsingService>()
 }

@@ -4,7 +4,7 @@ import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.read.ListAppender
 import com.ryzingtitan.datalogparser.cucumber.dtos.LogMessage
-import com.ryzingtitan.datalogparser.domain.parsing.ParsingService
+import com.ryzingtitan.datalogparser.domain.parsing.FileParsingService
 import io.cucumber.datatable.DataTable
 import io.cucumber.java.After
 import io.cucumber.java.Before
@@ -29,7 +29,7 @@ class LoggingStepDefs {
 
     @Before
     fun setup() {
-        consoleLogger = LoggerFactory.getLogger(ParsingService::class.java) as Logger
+        consoleLogger = LoggerFactory.getLogger(FileParsingService::class.java) as Logger
         consoleLogger.addAppender(appender)
 
         appender.start()
