@@ -4,7 +4,7 @@ import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.read.ListAppender
 import com.ryzingtitan.datalogparser.cucumber.dtos.LogMessage
-import com.ryzingtitan.datalogparser.domain.services.ParsingService
+import com.ryzingtitan.datalogparser.domain.parsing.ParsingService
 import io.cucumber.datatable.DataTable
 import io.cucumber.java.After
 import io.cucumber.java.Before
