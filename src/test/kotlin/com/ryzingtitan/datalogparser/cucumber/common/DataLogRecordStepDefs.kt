@@ -1,6 +1,6 @@
 package com.ryzingtitan.datalogparser.cucumber.common
 
-import com.ryzingtitan.datalogparser.data.datalogrecord.entities.DataLogRecordEntity
+import com.ryzingtitan.datalogparser.data.datalogrecord.entities.DataLogRecord
 import com.ryzingtitan.datalogparser.data.datalogrecord.repositories.DataLogRecordRepository
 import io.cucumber.datatable.DataTable
 import io.cucumber.java.Before
@@ -13,11 +13,27 @@ import java.util.*
 class DataLogRecordStepDefs(private val dataLogRecordRepository: DataLogRecordRepository) {
     @Then("the following data log records will be created:")
     fun thenTheFollowingDataLogRecordsWillBeCreated(table: DataTable) {
-        val expectedDataLogRecords = table.tableConverter.toList<DataLogRecordEntity>(table, DataLogRecordEntity::class.java)
+        val expectedDataLogRecords =
+            table.tableConverter.toList<DataLogRecord>(table, DataLogRecord::class.java).sortedBy { it.timestamp }
 
-        val actualDataLogRecords = dataLogRecordRepository.findAll().collectList().block()
+        val actualDataLogRecords = dataLogRecordRepository.findAll().collectList().block()?.sortedBy { it.timestamp }
 
-        assertEquals(expectedDataLogRecords.sortedBy { it.timestamp }, actualDataLogRecords?.sortedBy { it.timestamp })
+        assertEquals(expectedDataLogRecords.count(), actualDataLogRecords?.count())
+
+        for (expectedRecordNumber in 0 until expectedDataLogRecords.count()) {
+            assertEquals(
+                expectedDataLogRecords[expectedRecordNumber].sessionId,
+                actualDataLogRecords!![expectedRecordNumber].sessionId
+            )
+            assertEquals(
+                expectedDataLogRecords[expectedRecordNumber].timestamp,
+                actualDataLogRecords[expectedRecordNumber].timestamp
+            )
+            assertEquals(
+                expectedDataLogRecords[expectedRecordNumber].intakeAirTemperature,
+                actualDataLogRecords[expectedRecordNumber].intakeAirTemperature
+            )
+        }
     }
 
     @Before
@@ -26,11 +42,11 @@ class DataLogRecordStepDefs(private val dataLogRecordRepository: DataLogRecordRe
     }
 
     @DataTableType
-    fun mapDataLogRecord(tableRow: Map<String, String>): DataLogRecordEntity {
-        return DataLogRecordEntity(
+    fun mapDataLogRecord(tableRow: Map<String, String>): DataLogRecord {
+        return DataLogRecord(
             sessionId = UUID.fromString(tableRow["sessionId"]),
             timestamp = Instant.parse(tableRow["timestamp"]),
-            intakeAirTemperature = tableRow["intakeAirTemperature"].toString().toDouble()
+            intakeAirTemperature = tableRow["intakeAirTemperature"].toString().toDoubleOrNull()
         )
     }
 }

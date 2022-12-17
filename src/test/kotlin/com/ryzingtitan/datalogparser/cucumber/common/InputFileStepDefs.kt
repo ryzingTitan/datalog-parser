@@ -1,12 +1,14 @@
 package com.ryzingtitan.datalogparser.cucumber.common
 
+import com.ryzingtitan.datalogparser.cucumber.repositories.InMemoryInputFileRepository
 import io.cucumber.datatable.DataTable
+import io.cucumber.java.DataTableType
 import io.cucumber.java.en.Given
 
 class InputFileStepDefs {
     @Given("a file with the following rows:")
     fun givenAFileWithTheFollowingData(table: DataTable) {
-        fileLines = mutableListOf()
+        InMemoryInputFileRepository.fileLines = mutableListOf()
         createHeaderRow(table)
         createDataRows(table)
     }
@@ -16,19 +18,16 @@ class InputFileStepDefs {
         table.row(0).forEach { headerValue ->
             headerLine.append(headerValue).append(',')
         }
-        fileLines.add(headerLine.toString().trimEnd(','))
+        InMemoryInputFileRepository.fileLines.add(headerLine.toString().trimEnd(','))
     }
 
     private fun createDataRows(table: DataTable) {
-        val dataLine = StringBuilder()
-        table.rows(1).values().forEach { value ->
-            dataLine.append(value).append(',')
-        }
-
-        fileLines.add(dataLine.toString().trimEnd(','))
+        val dataLines = table.tableConverter.toList<String>(table, String::class.java)
+        InMemoryInputFileRepository.fileLines.addAll(dataLines)
     }
 
-    companion object InputFileStepDefsData {
-        lateinit var fileLines: MutableList<String>
+    @DataTableType
+    fun mapFileLine(tableRow: Map<String, String>): String {
+        return "${tableRow["Device Time"]},${tableRow["Intake Air Temperature(°F)"]}"
     }
 }

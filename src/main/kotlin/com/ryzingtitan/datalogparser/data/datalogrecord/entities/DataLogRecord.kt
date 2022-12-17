@@ -6,8 +6,9 @@ import java.time.Instant
 import java.util.UUID
 
 @Generated
-data class DataLogRecordEntity(
-    @Id val sessionId: UUID,
+data class DataLogRecord(
+    @Id val recordId: UUID = UUID.randomUUID(),
+    val sessionId: UUID,
     val timestamp: Instant,
-    val intakeAirTemperature: Double
+    val intakeAirTemperature: Double?
 )

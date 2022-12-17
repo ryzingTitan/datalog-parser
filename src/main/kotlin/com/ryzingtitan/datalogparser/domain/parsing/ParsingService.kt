@@ -1,6 +1,6 @@
 package com.ryzingtitan.datalogparser.domain.parsing
 
-import com.ryzingtitan.datalogparser.data.datalogrecord.entities.DataLogRecordEntity
+import com.ryzingtitan.datalogparser.data.datalogrecord.entities.DataLogRecord
 import com.ryzingtitan.datalogparser.data.datalogrecord.repositories.DataLogRecordRepository
 import com.ryzingtitan.datalogparser.data.inputfile.repositories.InputFileRepository
 import com.ryzingtitan.datalogparser.domain.uuid.UuidGenerator
@@ -35,13 +35,17 @@ class ParsingService(
         logger.info("File parsing completed")
     }
 
-    private fun createDataLogRecord(fileLine: String, sessionId: UUID): DataLogRecordEntity {
+    private fun createDataLogRecord(fileLine: String, sessionId: UUID): DataLogRecord {
         val lineColumns = fileLine.split(',')
 
         val recordTimestamp = parseFileLineTimestamp(lineColumns[0])
-        val intakeAirTemperature = lineColumns[1].toDouble()
+        val intakeAirTemperature = lineColumns[1].toDoubleOrNull()
 
-        return DataLogRecordEntity(sessionId, recordTimestamp, intakeAirTemperature)
+        return DataLogRecord(
+            sessionId = sessionId,
+            timestamp = recordTimestamp,
+            intakeAirTemperature = intakeAirTemperature
+        )
     }
 
     private fun parseFileLineTimestamp(fileLineTimestamp: String): Instant {
