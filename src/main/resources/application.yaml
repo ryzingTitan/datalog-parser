@@ -14,6 +14,10 @@ spring:
       uri: mongodb://localhost:27017
       database: dataLogging
 
+column-configuration:
+  device-time: 1
+  intake-air-temperature: 14
+
 ---
 spring:
   config:
@@ -23,3 +27,7 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017
       database: cucumberTest
+
+column-configuration:
+  device-time: 0
+  intake-air-temperature: 1

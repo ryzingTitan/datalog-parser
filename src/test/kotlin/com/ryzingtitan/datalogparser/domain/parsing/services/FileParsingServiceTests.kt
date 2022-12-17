@@ -1,4 +1,4 @@
-package com.ryzingtitan.datalogparser.domain.parsing
+package com.ryzingtitan.datalogparser.domain.parsing.services
 
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.Logger
@@ -24,6 +24,24 @@ import java.time.Instant
 import java.util.*
 
 class FileParsingServiceTests {
+    @Nested
+    inner class Parse {
+        @Test
+        fun `reads the input data and creates data log records`() {
+            fileParsingService.parse()
+
+            verify(mockInputFileRepository, times(1)).getInputFileLines()
+            verify(mockRowParsingService, times(1)).parse("data row 1", sessionId)
+            verify(mockDataLogRecordRepository, times(1)).save(any())
+
+            assertEquals(2, appender.list.size)
+            assertEquals(Level.INFO, appender.list[0].level)
+            assertEquals("Beginning to parse file", appender.list[0].message)
+            assertEquals(Level.INFO, appender.list[0].level)
+            assertEquals("File parsing completed", appender.list[1].message)
+        }
+    }
+
     @BeforeEach
     fun setup() {
         fileParsingService = FileParsingService(
@@ -44,24 +62,6 @@ class FileParsingServiceTests {
         appender.context = LoggerContext()
         logger.addAppender(appender)
         appender.start()
-    }
-
-    @Nested
-    inner class Parse {
-        @Test
-        fun `reads the input data and creates data log records`() {
-            fileParsingService.parse()
-
-            verify(mockInputFileRepository, times(1)).getInputFileLines()
-            verify(mockRowParsingService, times(1)).parse("data row 1", sessionId)
-            verify(mockDataLogRecordRepository, times(1)).save(any())
-
-            assertEquals(2, appender.list.size)
-            assertEquals(Level.INFO, appender.list[0].level)
-            assertEquals("Beginning to parse file", appender.list[0].message)
-            assertEquals(Level.INFO, appender.list[0].level)
-            assertEquals("File parsing completed", appender.list[1].message)
-        }
     }
 
     private lateinit var fileParsingService: FileParsingService

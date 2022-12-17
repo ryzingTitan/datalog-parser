@@ -11,11 +11,6 @@ import org.mockito.kotlin.verify
 
 @ExperimentalCoroutinesApi
 class ConsoleRunnerTests {
-    @BeforeEach
-    fun setup() {
-        consoleRunner = ConsoleRunner(mockFileParsingService)
-    }
-
     @Nested
     inner class Run {
         @Test
@@ -24,6 +19,11 @@ class ConsoleRunnerTests {
 
             verify(mockFileParsingService, times(1)).parse()
         }
+    }
+
+    @BeforeEach
+    fun setup() {
+        consoleRunner = ConsoleRunner(mockFileParsingService)
     }
 
     private lateinit var consoleRunner: ConsoleRunner

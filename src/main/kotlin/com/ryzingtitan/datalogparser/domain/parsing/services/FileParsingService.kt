@@ -1,4 +1,4 @@
-package com.ryzingtitan.datalogparser.domain.parsing
+package com.ryzingtitan.datalogparser.domain.parsing.services
 
 import com.ryzingtitan.datalogparser.data.datalogrecord.repositories.DataLogRecordRepository
 import com.ryzingtitan.datalogparser.data.inputfile.repositories.InputFileRepository

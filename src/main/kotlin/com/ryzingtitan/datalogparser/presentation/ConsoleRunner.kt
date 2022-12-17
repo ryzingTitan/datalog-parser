@@ -1,6 +1,6 @@
 package com.ryzingtitan.datalogparser.presentation
 
-import com.ryzingtitan.datalogparser.domain.parsing.FileParsingService
+import com.ryzingtitan.datalogparser.domain.parsing.services.FileParsingService
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
