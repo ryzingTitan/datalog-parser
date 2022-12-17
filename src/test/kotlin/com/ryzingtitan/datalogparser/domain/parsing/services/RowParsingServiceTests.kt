@@ -19,24 +19,24 @@ class RowParsingServiceTests {
         fun `parses the row correctly when it contains a valid intake air temperature`() {
             val row = "$firstLineDeviceTime,$firstLineIntakeAirTemperature"
 
-            val dataLogRecord = rowParsingService.parse(row, sessionId)
+            val datalogRecord = rowParsingService.parse(row, sessionId)
 
-            assertNotNull(dataLogRecord.recordId)
-            assertEquals(sessionId, dataLogRecord.sessionId)
-            assertEquals(firstLineTimestamp, dataLogRecord.timestamp)
-            assertEquals(firstLineIntakeAirTemperature, dataLogRecord.intakeAirTemperature)
+            assertNotNull(datalogRecord.recordId)
+            assertEquals(sessionId, datalogRecord.sessionId)
+            assertEquals(firstLineTimestamp, datalogRecord.timestamp)
+            assertEquals(firstLineIntakeAirTemperature, datalogRecord.intakeAirTemperature)
         }
 
         @Test
         fun `parses the row correctly when it contains an invalid intake air temperature`() {
             val row = "$secondLineDeviceTime,$secondLineIntakeAirTemperature"
 
-            val dataLogRecord = rowParsingService.parse(row, sessionId)
+            val datalogRecord = rowParsingService.parse(row, sessionId)
 
-            assertNotNull(dataLogRecord.recordId)
-            assertEquals(sessionId, dataLogRecord.sessionId)
-            assertEquals(secondLineTimestamp, dataLogRecord.timestamp)
-            assertNull(dataLogRecord.intakeAirTemperature)
+            assertNotNull(datalogRecord.recordId)
+            assertEquals(sessionId, datalogRecord.sessionId)
+            assertEquals(secondLineTimestamp, datalogRecord.timestamp)
+            assertNull(datalogRecord.intakeAirTemperature)
         }
     }
 

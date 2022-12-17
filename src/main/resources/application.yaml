@@ -2,7 +2,7 @@ spring:
   profiles:
     active: production
   application:
-    name: titan-dl-parser
+    name: datalog-parser
 
 ---
 spring:

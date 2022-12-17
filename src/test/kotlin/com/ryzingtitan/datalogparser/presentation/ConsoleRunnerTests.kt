@@ -1,7 +1,6 @@
 package com.ryzingtitan.datalogparser.presentation
 
-import com.ryzingtitan.datalogparser.domain.parsing.FileParsingService
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.ryzingtitan.datalogparser.domain.parsing.services.FileParsingService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -9,7 +8,6 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 
-@ExperimentalCoroutinesApi
 class ConsoleRunnerTests {
     @Nested
     inner class Run {

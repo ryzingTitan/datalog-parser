@@ -5,8 +5,8 @@ import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.read.ListAppender
-import com.ryzingtitan.datalogparser.data.datalogrecord.entities.DataLogRecord
-import com.ryzingtitan.datalogparser.data.datalogrecord.repositories.DataLogRecordRepository
+import com.ryzingtitan.datalogparser.data.datalogrecord.entities.DatalogRecord
+import com.ryzingtitan.datalogparser.data.datalogrecord.repositories.DatalogRecordRepository
 import com.ryzingtitan.datalogparser.data.inputfile.repositories.InputFileRepository
 import com.ryzingtitan.datalogparser.domain.uuid.UuidGenerator
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -32,7 +32,7 @@ class FileParsingServiceTests {
 
             verify(mockInputFileRepository, times(1)).getInputFileLines()
             verify(mockRowParsingService, times(1)).parse("data row 1", sessionId)
-            verify(mockDataLogRecordRepository, times(1)).save(any())
+            verify(mockDatalogRecordRepository, times(1)).save(any())
 
             assertEquals(2, appender.list.size)
             assertEquals(Level.INFO, appender.list[0].level)
@@ -46,16 +46,16 @@ class FileParsingServiceTests {
     fun setup() {
         fileParsingService = FileParsingService(
             mockInputFileRepository,
-            mockDataLogRecordRepository,
+            mockDatalogRecordRepository,
             mockUuidGenerator,
             mockRowParsingService
         )
 
         whenever(mockInputFileRepository.getInputFileLines()).thenReturn(listOf("header row", "data row 1"))
         whenever(mockUuidGenerator.generate()).thenReturn(sessionId)
-        whenever(mockRowParsingService.parse("data row 1", sessionId)).thenReturn(dataLogRecord)
-        whenever(mockDataLogRecordRepository.save(dataLogRecord))
-            .thenReturn(Mono.just(dataLogRecord))
+        whenever(mockRowParsingService.parse("data row 1", sessionId)).thenReturn(datalogRecord)
+        whenever(mockDatalogRecordRepository.save(datalogRecord))
+            .thenReturn(Mono.just(datalogRecord))
 
         logger = LoggerFactory.getLogger(FileParsingService::class.java) as Logger
         appender = ListAppender()
@@ -69,12 +69,12 @@ class FileParsingServiceTests {
     private lateinit var appender: ListAppender<ILoggingEvent>
 
     private val mockInputFileRepository = mock<InputFileRepository>()
-    private val mockDataLogRecordRepository = mock<DataLogRecordRepository>()
+    private val mockDatalogRecordRepository = mock<DatalogRecordRepository>()
     private val mockUuidGenerator = mock<UuidGenerator>()
     private val mockRowParsingService = mock<RowParsingService>()
 
     private val sessionId = UUID.randomUUID()
-    private val dataLogRecord = DataLogRecord(
+    private val datalogRecord = DatalogRecord(
         sessionId = sessionId,
         timestamp = Instant.now(),
         intakeAirTemperature = 138.5

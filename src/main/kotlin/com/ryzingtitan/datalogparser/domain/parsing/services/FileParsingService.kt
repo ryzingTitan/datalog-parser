@@ -1,6 +1,6 @@
 package com.ryzingtitan.datalogparser.domain.parsing.services
 
-import com.ryzingtitan.datalogparser.data.datalogrecord.repositories.DataLogRecordRepository
+import com.ryzingtitan.datalogparser.data.datalogrecord.repositories.DatalogRecordRepository
 import com.ryzingtitan.datalogparser.data.inputfile.repositories.InputFileRepository
 import com.ryzingtitan.datalogparser.domain.uuid.UuidGenerator
 import org.slf4j.Logger
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 @Service
 class FileParsingService(
     private val inputFileRepository: InputFileRepository,
-    private val dataLogRecordRepository: DataLogRecordRepository,
+    private val datalogRecordRepository: DatalogRecordRepository,
     private val uuidGenerator: UuidGenerator,
     private val rowParsingService: RowParsingService
 ) {
@@ -24,9 +24,9 @@ class FileParsingService(
 
         val sessionId = uuidGenerator.generate()
         fileLinesWithoutHeader.forEach { fileLine ->
-            val dataLogRecord = rowParsingService.parse(fileLine, sessionId)
+            val datalogRecord = rowParsingService.parse(fileLine, sessionId)
 
-            dataLogRecordRepository.save(dataLogRecord).block()
+            datalogRecordRepository.save(datalogRecord).block()
         }
 
         logger.info("File parsing completed")

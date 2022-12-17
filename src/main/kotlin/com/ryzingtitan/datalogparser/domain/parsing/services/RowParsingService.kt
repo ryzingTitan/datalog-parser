@@ -1,6 +1,6 @@
 package com.ryzingtitan.datalogparser.domain.parsing.services
 
-import com.ryzingtitan.datalogparser.data.datalogrecord.entities.DataLogRecord
+import com.ryzingtitan.datalogparser.data.datalogrecord.entities.DatalogRecord
 import com.ryzingtitan.datalogparser.domain.parsing.configuration.ColumnConfiguration
 import org.springframework.stereotype.Service
 import java.time.Instant
@@ -10,17 +10,17 @@ import java.util.*
 
 @Service
 class RowParsingService(private val columnConfiguration: ColumnConfiguration) {
-    fun parse(row: String, sessionId: UUID): DataLogRecord {
-        return createDataLogRecord(row, sessionId)
+    fun parse(row: String, sessionId: UUID): DatalogRecord {
+        return createDatalogRecord(row, sessionId)
     }
 
-    private fun createDataLogRecord(row: String, sessionId: UUID): DataLogRecord {
+    private fun createDatalogRecord(row: String, sessionId: UUID): DatalogRecord {
         val lineColumns = row.split(',')
 
         val recordTimestamp = parseRowTimestamp(lineColumns[columnConfiguration.deviceTime])
         val intakeAirTemperature = lineColumns[columnConfiguration.intakeAirTemperature].toDoubleOrNull()
 
-        return DataLogRecord(
+        return DatalogRecord(
             sessionId = sessionId,
             timestamp = recordTimestamp,
             intakeAirTemperature = intakeAirTemperature

@@ -1,6 +1,6 @@
 package com.ryzingtitan.datalogparser.cucumber
 
-import com.ryzingtitan.datalogparser.domain.parsing.FileParsingService
+import com.ryzingtitan.datalogparser.domain.parsing.services.FileParsingService
 import io.cucumber.java.en.When
 
 class ConsoleRunnerStepDefs(private val fileParsingService: FileParsingService) {
