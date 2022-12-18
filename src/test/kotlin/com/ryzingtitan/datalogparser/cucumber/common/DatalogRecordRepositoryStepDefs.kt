@@ -6,24 +6,30 @@ import io.cucumber.datatable.DataTable
 import io.cucumber.java.Before
 import io.cucumber.java.DataTableType
 import io.cucumber.java.en.Then
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import java.time.Instant
 import java.util.*
 
-class DatalogRecordStepDefs(private val datalogRecordRepository: DatalogRecordRepository) {
+class DatalogRecordRepositoryStepDefs(private val datalogRecordRepository: DatalogRecordRepository) {
     @Then("the following data log records will be created:")
     fun thenTheFollowingDatalogRecordsWillBeCreated(table: DataTable) {
         val expectedDatalogRecords =
             table.tableConverter.toList<DatalogRecord>(table, DatalogRecord::class.java).sortedBy { it.timestamp }
 
-        val actualDatalogRecords = datalogRecordRepository.findAll().collectList().block()?.sortedBy { it.timestamp }
+        val actualDatalogRecords = mutableListOf <DatalogRecord>()
+        runBlocking {
+            datalogRecordRepository.findAll().collect { datalogRecord ->
+                actualDatalogRecords.add(datalogRecord)
+            }
+        }
 
-        assertEquals(expectedDatalogRecords.count(), actualDatalogRecords?.count())
+        assertEquals(expectedDatalogRecords.count(), actualDatalogRecords.count())
 
         for (expectedRecordNumber in 0 until expectedDatalogRecords.count()) {
             assertEquals(
                 expectedDatalogRecords[expectedRecordNumber].sessionId,
-                actualDatalogRecords!![expectedRecordNumber].sessionId
+                actualDatalogRecords[expectedRecordNumber].sessionId
             )
             assertEquals(
                 expectedDatalogRecords[expectedRecordNumber].timestamp,
@@ -38,7 +44,9 @@ class DatalogRecordStepDefs(private val datalogRecordRepository: DatalogRecordRe
 
     @Before
     fun setup() {
-        datalogRecordRepository.deleteAll().block()
+        runBlocking {
+            datalogRecordRepository.deleteAll()
+        }
     }
 
     @DataTableType

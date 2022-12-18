@@ -9,6 +9,8 @@ import com.ryzingtitan.datalogparser.data.datalogrecord.entities.DatalogRecord
 import com.ryzingtitan.datalogparser.data.datalogrecord.repositories.DatalogRecordRepository
 import com.ryzingtitan.datalogparser.data.inputfile.repositories.InputFileRepository
 import com.ryzingtitan.datalogparser.domain.uuid.UuidGenerator
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -19,15 +21,17 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
-import reactor.core.publisher.Mono
 import java.time.Instant
 import java.util.*
 
+@ExperimentalCoroutinesApi
 class FileParsingServiceTests {
     @Nested
     inner class Parse {
         @Test
-        fun `reads the input data and creates data log records`() {
+        fun `reads the input data and creates data log records`() = runTest {
+            whenever(mockDatalogRecordRepository.save(datalogRecord)).thenReturn(datalogRecord)
+
             fileParsingService.parse()
 
             verify(mockInputFileRepository, times(1)).getInputFileLines()
@@ -54,8 +58,6 @@ class FileParsingServiceTests {
         whenever(mockInputFileRepository.getInputFileLines()).thenReturn(listOf("header row", "data row 1"))
         whenever(mockUuidGenerator.generate()).thenReturn(sessionId)
         whenever(mockRowParsingService.parse("data row 1", sessionId)).thenReturn(datalogRecord)
-        whenever(mockDatalogRecordRepository.save(datalogRecord))
-            .thenReturn(Mono.just(datalogRecord))
 
         logger = LoggerFactory.getLogger(FileParsingService::class.java) as Logger
         appender = ListAppender()

@@ -3,6 +3,7 @@ package com.ryzingtitan.datalogparser.domain.parsing.services
 import com.ryzingtitan.datalogparser.data.datalogrecord.repositories.DatalogRecordRepository
 import com.ryzingtitan.datalogparser.data.inputfile.repositories.InputFileRepository
 import com.ryzingtitan.datalogparser.domain.uuid.UuidGenerator
+import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -26,7 +27,9 @@ class FileParsingService(
         fileLinesWithoutHeader.forEach { fileLine ->
             val datalogRecord = rowParsingService.parse(fileLine, sessionId)
 
-            datalogRecordRepository.save(datalogRecord).block()
+            runBlocking {
+                datalogRecordRepository.save(datalogRecord)
+            }
         }
 
         logger.info("File parsing completed")
