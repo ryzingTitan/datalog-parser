@@ -46,7 +46,7 @@ dependencies {
     testImplementation("io.cucumber:cucumber-junit-platform-engine:7.9.0")
     testImplementation("io.cucumber:cucumber-spring:7.9.0")
     testImplementation("io.projectreactor:reactor-test:3.5.0")
-    testImplementation("org.testcontainers:testcontainers:1.17.6")
+    testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:4.3.3")
 }
 
 tasks.withType<KotlinCompile> {
