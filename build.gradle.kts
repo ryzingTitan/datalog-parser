@@ -11,6 +11,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
     id("com.github.ben-manes.versions") version "0.44.0"
+    id("org.sonarqube") version "3.5.0.2730"
     jacoco
     distribution
 }
@@ -110,7 +111,7 @@ jacoco {
 
 tasks.jacocoTestReport {
     reports {
-        xml.required.set(false)
+        xml.required.set(true)
         csv.required.set(false)
         html.outputLocation.set(file("${rootProject.rootDir}/${rootProject.name}/jacocoHtmlReport"))
     }
@@ -168,6 +169,14 @@ distributions {
                 include("${rootProject.name}-${rootProject.version}.jar")
             }
         }
+    }
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "ryzingTitan_datalog-parser")
+        property("sonar.organization", "kstoltzf")
+        property("sonar.host.url", "https://sonarcloud.io")
     }
 }
 
