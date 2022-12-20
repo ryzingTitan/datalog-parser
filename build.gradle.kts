@@ -33,7 +33,7 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:1.2.0")
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:1.2.1")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
@@ -43,10 +43,10 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     testImplementation("org.junit.platform:junit-platform-suite-api:1.9.1")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
-    testImplementation("io.cucumber:cucumber-java:7.9.0")
-    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.9.0")
-    testImplementation("io.cucumber:cucumber-spring:7.9.0")
-    testImplementation("io.projectreactor:reactor-test:3.5.0")
+    testImplementation("io.cucumber:cucumber-java:7.10.1")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.10.1")
+    testImplementation("io.cucumber:cucumber-spring:7.10.1")
+    testImplementation("io.projectreactor:reactor-test:3.5.1")
     testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:4.3.3")
 }
 
