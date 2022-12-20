@@ -8,8 +8,7 @@ import java.nio.file.Paths
 @Repository
 @Profile("production")
 class FileSystemInputFileRepository : InputFileRepository {
-    override fun getInputFileLines(): List<String> {
-        val filePath = Paths.get("C:\\Users\\Kyle\\Downloads\\trackLog-2022-Sep-18_14-15-31.csv")
-        return Files.readAllLines(filePath)
+    override fun getInputFileLines(filePath: String): List<String> {
+        return Files.readAllLines(Paths.get(filePath))
     }
 }

@@ -9,9 +9,9 @@ Feature: Parse a record and store the intake air temperature
       | sessionId                            | timestamp                | intakeAirTemperature |
       | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:47.968Z | 123.8                |
     And the application will log the following messages:
-      | level | message                 |
-      | INFO  | Beginning to parse file |
-      | INFO  | File parsing completed  |
+      | level | message                                       |
+      | INFO  | Beginning to parse file: testFile.txt         |
+      | INFO  | File parsing completed for file: testFile.txt |
 
   Scenario: Parse multiple records with valid intake air temperature data
     Given a file with the following rows:
@@ -24,9 +24,9 @@ Feature: Parse a record and store the intake air temperature
       | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:47.968Z | 123.8                |
       | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:48.962Z | 130.0                |
     And the application will log the following messages:
-      | level | message                 |
-      | INFO  | Beginning to parse file |
-      | INFO  | File parsing completed  |
+      | level | message                                       |
+      | INFO  | Beginning to parse file: testFile.txt         |
+      | INFO  | File parsing completed for file: testFile.txt |
 
   Scenario: Parse records with invalid intake air temperature data
     Given a file with the following rows:
@@ -41,6 +41,6 @@ Feature: Parse a record and store the intake air temperature
       | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:48.962Z |                      |
       | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:49.965Z | 130.0                |
     And the application will log the following messages:
-      | level | message                 |
-      | INFO  | Beginning to parse file |
-      | INFO  | File parsing completed  |
+      | level | message                                       |
+      | INFO  | Beginning to parse file: testFile.txt         |
+      | INFO  | File parsing completed for file: testFile.txt |

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository
 @Repository
 @Profile("cucumber")
 class InMemoryInputFileRepository : InputFileRepository {
-    override fun getInputFileLines(): List<String> {
+    override fun getInputFileLines(filePath: String): List<String> {
         return fileLines
     }
 

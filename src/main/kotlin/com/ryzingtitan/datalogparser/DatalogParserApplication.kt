@@ -8,6 +8,7 @@ import org.springframework.boot.runApplication
 @ConfigurationPropertiesScan
 class DatalogParserApplication
 
+@Suppress("SpreadOperator")
 fun main(args: Array<String>) {
-    runApplication<DatalogParserApplication>(arrayOf(args).toString())
+    runApplication<DatalogParserApplication>(*args)
 }

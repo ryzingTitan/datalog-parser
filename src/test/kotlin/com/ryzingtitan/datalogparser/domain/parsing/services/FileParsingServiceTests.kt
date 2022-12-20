@@ -32,17 +32,17 @@ class FileParsingServiceTests {
         fun `reads the input data and creates data log records`() = runTest {
             whenever(mockDatalogRecordRepository.save(datalogRecord)).thenReturn(datalogRecord)
 
-            fileParsingService.parse()
+            fileParsingService.parse("testFile")
 
-            verify(mockInputFileRepository, times(1)).getInputFileLines()
+            verify(mockInputFileRepository, times(1)).getInputFileLines("testFile")
             verify(mockRowParsingService, times(1)).parse("data row 1", sessionId)
             verify(mockDatalogRecordRepository, times(1)).save(any())
 
             assertEquals(2, appender.list.size)
             assertEquals(Level.INFO, appender.list[0].level)
-            assertEquals("Beginning to parse file", appender.list[0].message)
+            assertEquals("Beginning to parse file: testFile", appender.list[0].message)
             assertEquals(Level.INFO, appender.list[0].level)
-            assertEquals("File parsing completed", appender.list[1].message)
+            assertEquals("File parsing completed for file: testFile", appender.list[1].message)
         }
     }
 
@@ -55,7 +55,7 @@ class FileParsingServiceTests {
             mockRowParsingService
         )
 
-        whenever(mockInputFileRepository.getInputFileLines()).thenReturn(listOf("header row", "data row 1"))
+        whenever(mockInputFileRepository.getInputFileLines("testFile")).thenReturn(listOf("header row", "data row 1"))
         whenever(mockUuidGenerator.generate()).thenReturn(sessionId)
         whenever(mockRowParsingService.parse("data row 1", sessionId)).thenReturn(datalogRecord)
 
