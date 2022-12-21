@@ -54,7 +54,8 @@ class DatalogRecordRepositoryStepDefs(private val datalogRecordRepository: Datal
         return DatalogRecord(
             sessionId = UUID.fromString(tableRow["sessionId"]),
             timestamp = Instant.parse(tableRow["timestamp"]),
-            intakeAirTemperature = tableRow["intakeAirTemperature"].toString().toDoubleOrNull()
+            intakeAirTemperature = tableRow["intakeAirTemperature"].toString().toDoubleOrNull(),
+            boostPressure = tableRow["boostPressure"].toString().toDoubleOrNull()
         )
     }
 }
