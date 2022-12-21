@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "com.ryzingtitan"
-version = "1.0.0"
+version = "1.1.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 configurations {
@@ -162,7 +162,7 @@ distributions {
         contents {
             into("/") {
                 from("src/main/resources")
-                include("application.properties")
+                include("application.yaml")
             }
             into("/") {
                 from("build/libs")
@@ -175,7 +175,7 @@ distributions {
 sonarqube {
     properties {
         property("sonar.projectKey", "ryzingTitan_datalog-parser")
-        property("sonar.organization", "kstoltzf")
+        property("sonar.organization", "ryzingtitan")
         property("sonar.host.url", "https://sonarcloud.io")
     }
 }

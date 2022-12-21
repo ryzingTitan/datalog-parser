@@ -28,6 +28,7 @@ class InputFileStepDefs {
 
     @DataTableType
     fun mapFileLine(tableRow: Map<String, String>): String {
-        return "${tableRow["Device Time"]},${tableRow["Intake Air Temperature(°F)"]}"
+        return "${tableRow["Device Time"]},${tableRow["Intake Air Temperature(°F)"]}," +
+            "${tableRow["Turbo Boost & Vacuum Gauge(psi)"]}"
     }
 }

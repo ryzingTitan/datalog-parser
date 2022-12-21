@@ -79,6 +79,7 @@ class FileParsingServiceTests {
     private val datalogRecord = DatalogRecord(
         sessionId = sessionId,
         timestamp = Instant.now(),
-        intakeAirTemperature = 138.5
+        intakeAirTemperature = 138.5,
+        boostPressure = 16.5
     )
 }

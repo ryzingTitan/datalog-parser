@@ -12,5 +12,6 @@ data class DatalogRecord(
     @Id val recordId: UUID = UUID.randomUUID(),
     val sessionId: UUID,
     val timestamp: Instant,
-    val intakeAirTemperature: Double?
+    val intakeAirTemperature: Double?,
+    val boostPressure: Double?
 )
