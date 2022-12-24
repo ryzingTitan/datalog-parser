@@ -12,9 +12,9 @@ data class DatalogRecord(
     @Id val recordId: UUID = UUID.randomUUID(),
     val sessionId: UUID,
     val timestamp: Instant,
-    val intakeAirTemperature: Double?,
+    val intakeAirTemperature: Int?,
     val boostPressure: Double?,
-    val coolantTemperature: Double?,
+    val coolantTemperature: Int?,
     val engineRpm: Int?,
     val speed: Int?,
     val throttlePosition: Double?

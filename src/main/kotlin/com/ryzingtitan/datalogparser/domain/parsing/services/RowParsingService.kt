@@ -18,11 +18,11 @@ class RowParsingService(private val columnConfiguration: ColumnConfiguration) {
         val lineColumns = row.split(',')
 
         val recordTimestamp = parseRowTimestamp(lineColumns[columnConfiguration.deviceTime])
-        val intakeAirTemperature = lineColumns[columnConfiguration.intakeAirTemperature].toDoubleOrNull()
+        val intakeAirTemperature = lineColumns[columnConfiguration.intakeAirTemperature].toDoubleOrNull()?.toInt()
         val boostPressure = lineColumns[columnConfiguration.boostPressure].toDoubleOrNull()
-        val coolantTemperature = lineColumns[columnConfiguration.coolantTemperature].toDoubleOrNull()
-        val engineRpm = lineColumns[columnConfiguration.engineRpm].toIntOrNull()
-        val speed = lineColumns[columnConfiguration.speed].toIntOrNull()
+        val coolantTemperature = lineColumns[columnConfiguration.coolantTemperature].toDoubleOrNull()?.toInt()
+        val engineRpm = lineColumns[columnConfiguration.engineRpm].toDoubleOrNull()?.toInt()
+        val speed = lineColumns[columnConfiguration.speed].toDoubleOrNull()?.toInt()
         val throttlePosition = lineColumns[columnConfiguration.throttlePosition].toDoubleOrNull()
 
         return DatalogRecord(

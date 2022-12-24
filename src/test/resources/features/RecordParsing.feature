@@ -7,7 +7,7 @@ Feature: Parse a record and store the session data
     When the file is parsed
     Then the following data log records will be created:
       | sessionId                            | timestamp                | intakeAirTemperature | boostPressure | coolantTemperature | engineRpm | speed | throttlePosition |
-      | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:47.968Z | 123.8                | 16.5          | 95.9               | 3500      | 74    | 5.6              |
+      | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:47.968Z | 123                  | 16.5          | 95                 | 3500      | 74    | 5.6              |
     And the application will log the following messages:
       | level | message                                       |
       | INFO  | Beginning to parse file: testFile.txt         |
@@ -21,8 +21,8 @@ Feature: Parse a record and store the session data
     When the file is parsed
     Then the following data log records will be created:
       | sessionId                            | timestamp                | intakeAirTemperature | boostPressure | coolantTemperature | engineRpm | speed | throttlePosition |
-      | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:47.968Z | 123.8                | 16.5          | 95.9               | 3500      | 74    | 5.6              |
-      | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:48.962Z | 130.0                | 15.0          | 98                 | 2500      | 79    | 7.0              |
+      | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:47.968Z | 123                  | 16.5          | 95                 | 3500      | 74    | 5.6              |
+      | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:48.962Z | 130                  | 15.0          | 98                 | 2500      | 79    | 7.0              |
     And the application will log the following messages:
       | level | message                                       |
       | INFO  | Beginning to parse file: testFile.txt         |
@@ -37,9 +37,9 @@ Feature: Parse a record and store the session data
     When the file is parsed
     Then the following data log records will be created:
       | sessionId                            | timestamp                | intakeAirTemperature | boostPressure | coolantTemperature | engineRpm | speed | throttlePosition |
-      | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:47.968Z | 123.8                |               | 166.2              |           | 74    | 5.6              |
-      | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:48.962Z |                      | 16.5          | 95.9               | 3500      |       | 7.0              |
-      | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:49.965Z | 130.0                | 15.0          |                    | 2500      | 79    |                  |
+      | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:47.968Z | 123                  |               | 166                |           | 74    | 5.6              |
+      | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:48.962Z |                      | 16.5          | 95                 | 3500      |       | 7.0              |
+      | c61cc339-f93d-45a4-aa2b-923f0482b97f | 2022-09-18T18:15:49.965Z | 130                  | 15.0          |                    | 2500      | 79    |                  |
     And the application will log the following messages:
       | level | message                                       |
       | INFO  | Beginning to parse file: testFile.txt         |

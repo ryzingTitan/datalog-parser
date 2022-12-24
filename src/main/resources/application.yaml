@@ -40,5 +40,5 @@ column-configuration:
   engine-rpm: 2
   intake-air-temperature: 3
   speed: 4
-  throttle-position: 4
-  boost-pressure: 5
+  throttle-position: 5
+  boost-pressure: 6

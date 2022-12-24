@@ -39,6 +39,31 @@ class DatalogRecordRepositoryStepDefs(private val datalogRecordRepository: Datal
                 expectedDatalogRecords[expectedRecordNumber].intakeAirTemperature,
                 actualDatalogRecords[expectedRecordNumber].intakeAirTemperature
             )
+
+            assertEquals(
+                expectedDatalogRecords[expectedRecordNumber].boostPressure,
+                actualDatalogRecords[expectedRecordNumber].boostPressure
+            )
+
+            assertEquals(
+                expectedDatalogRecords[expectedRecordNumber].coolantTemperature,
+                actualDatalogRecords[expectedRecordNumber].coolantTemperature
+            )
+
+            assertEquals(
+                expectedDatalogRecords[expectedRecordNumber].engineRpm,
+                actualDatalogRecords[expectedRecordNumber].engineRpm
+            )
+
+            assertEquals(
+                expectedDatalogRecords[expectedRecordNumber].speed,
+                actualDatalogRecords[expectedRecordNumber].speed
+            )
+
+            assertEquals(
+                expectedDatalogRecords[expectedRecordNumber].throttlePosition,
+                actualDatalogRecords[expectedRecordNumber].throttlePosition
+            )
         }
     }
 
@@ -54,9 +79,9 @@ class DatalogRecordRepositoryStepDefs(private val datalogRecordRepository: Datal
         return DatalogRecord(
             sessionId = UUID.fromString(tableRow["sessionId"]),
             timestamp = Instant.parse(tableRow["timestamp"]),
-            intakeAirTemperature = tableRow["intakeAirTemperature"].toString().toDoubleOrNull(),
+            intakeAirTemperature = tableRow["intakeAirTemperature"].toString().toIntOrNull(),
             boostPressure = tableRow["boostPressure"].toString().toDoubleOrNull(),
-            coolantTemperature = tableRow["coolantTemperature"].toString().toDoubleOrNull(),
+            coolantTemperature = tableRow["coolantTemperature"].toString().toIntOrNull(),
             engineRpm = tableRow["engineRpm"].toString().toIntOrNull(),
             speed = tableRow["speed"].toString().toIntOrNull(),
             throttlePosition = tableRow["throttlePosition"].toString().toDoubleOrNull()
