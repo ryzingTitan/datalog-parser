@@ -13,5 +13,6 @@ data class DatalogRecord(
     val sessionId: UUID,
     val timestamp: Instant,
     val intakeAirTemperature: Double?,
-    val boostPressure: Double?
+    val boostPressure: Double?,
+    val coolantTemperature: Double?
 )

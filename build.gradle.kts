@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "com.ryzingtitan"
-version = "1.1.0"
+version = "1.2.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 configurations {

@@ -8,5 +8,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 data class ColumnConfiguration(
     val deviceTime: Int,
     val intakeAirTemperature: Int,
-    val boostPressure: Int
+    val boostPressure: Int,
+    val coolantTemperature: Int
 )
