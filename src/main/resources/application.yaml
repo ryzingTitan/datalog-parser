@@ -17,6 +17,7 @@ spring:
 column-configuration:
   device-time: 1
   coolant-temperature: 12
+  engine-rpm: 13
   intake-air-temperature: 14
   boost-pressure: 17
 
@@ -34,5 +35,6 @@ spring:
 column-configuration:
   device-time: 0
   coolant-temperature: 1
-  intake-air-temperature: 2
-  boost-pressure: 3
+  engine-rpm: 2
+  intake-air-temperature: 3
+  boost-pressure: 4

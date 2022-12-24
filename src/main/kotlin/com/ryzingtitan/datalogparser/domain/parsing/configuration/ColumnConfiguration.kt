@@ -9,5 +9,6 @@ data class ColumnConfiguration(
     val deviceTime: Int,
     val intakeAirTemperature: Int,
     val boostPressure: Int,
-    val coolantTemperature: Int
+    val coolantTemperature: Int,
+    val engineRpm: Int
 )

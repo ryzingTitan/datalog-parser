@@ -56,7 +56,8 @@ class DatalogRecordRepositoryStepDefs(private val datalogRecordRepository: Datal
             timestamp = Instant.parse(tableRow["timestamp"]),
             intakeAirTemperature = tableRow["intakeAirTemperature"].toString().toDoubleOrNull(),
             boostPressure = tableRow["boostPressure"].toString().toDoubleOrNull(),
-            coolantTemperature = tableRow["coolantTemperature"].toString().toDoubleOrNull()
+            coolantTemperature = tableRow["coolantTemperature"].toString().toDoubleOrNull(),
+            engineRpm = tableRow["engineRpm"].toString().toIntOrNull()
         )
     }
 }

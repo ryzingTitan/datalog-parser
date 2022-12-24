@@ -30,6 +30,7 @@ class InputFileStepDefs {
     fun mapFileLine(tableRow: Map<String, String>): String {
         return "${tableRow["Device Time"]}," +
             "${tableRow["Engine Coolant Temperature(°F)"]}," +
+            "${tableRow["Engine RPM(rpm)"]}," +
             "${tableRow["Intake Air Temperature(°F)"]}," +
             "${tableRow["Turbo Boost & Vacuum Gauge(psi)"]}"
     }

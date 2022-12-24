@@ -14,5 +14,6 @@ data class DatalogRecord(
     val timestamp: Instant,
     val intakeAirTemperature: Double?,
     val boostPressure: Double?,
-    val coolantTemperature: Double?
+    val coolantTemperature: Double?,
+    val engineRpm: Int?
 )
