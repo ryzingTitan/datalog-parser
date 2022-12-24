@@ -80,6 +80,7 @@ class FileParsingServiceTests {
         sessionId = sessionId,
         timestamp = Instant.now(),
         intakeAirTemperature = 138.5,
-        boostPressure = 16.5
+        boostPressure = 16.5,
+        coolantTemperature = 155.3
     )
 }
