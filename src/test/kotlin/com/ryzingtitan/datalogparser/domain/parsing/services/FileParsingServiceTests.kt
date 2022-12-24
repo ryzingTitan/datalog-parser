@@ -81,6 +81,7 @@ class FileParsingServiceTests {
         timestamp = Instant.now(),
         intakeAirTemperature = 138.5,
         boostPressure = 16.5,
-        coolantTemperature = 155.3
+        coolantTemperature = 155.3,
+        engineRpm = 3500
     )
 }
