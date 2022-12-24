@@ -83,6 +83,7 @@ class FileParsingServiceTests {
         boostPressure = 16.5,
         coolantTemperature = 155.3,
         engineRpm = 3500,
-        speed = 79
+        speed = 79,
+        throttlePosition = 83.2
     )
 }

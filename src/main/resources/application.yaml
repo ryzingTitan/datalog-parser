@@ -20,6 +20,7 @@ column-configuration:
   engine-rpm: 13
   intake-air-temperature: 14
   speed: 15
+  throttle-position: 16
   boost-pressure: 17
 
 
@@ -39,4 +40,5 @@ column-configuration:
   engine-rpm: 2
   intake-air-temperature: 3
   speed: 4
+  throttle-position: 4
   boost-pressure: 5

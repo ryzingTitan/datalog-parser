@@ -58,7 +58,8 @@ class DatalogRecordRepositoryStepDefs(private val datalogRecordRepository: Datal
             boostPressure = tableRow["boostPressure"].toString().toDoubleOrNull(),
             coolantTemperature = tableRow["coolantTemperature"].toString().toDoubleOrNull(),
             engineRpm = tableRow["engineRpm"].toString().toIntOrNull(),
-            speed = tableRow["speed"].toString().toIntOrNull()
+            speed = tableRow["speed"].toString().toIntOrNull(),
+            throttlePosition = tableRow["throttlePosition"].toString().toDoubleOrNull()
         )
     }
 }
