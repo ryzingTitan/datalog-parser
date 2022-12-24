@@ -32,6 +32,7 @@ class InputFileStepDefs {
             "${tableRow["Engine Coolant Temperature(°F)"]}," +
             "${tableRow["Engine RPM(rpm)"]}," +
             "${tableRow["Intake Air Temperature(°F)"]}," +
+            "${tableRow["Speed (OBD)(mph)"]}," +
             "${tableRow["Turbo Boost & Vacuum Gauge(psi)"]}"
     }
 }

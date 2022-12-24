@@ -22,6 +22,7 @@ class RowParsingService(private val columnConfiguration: ColumnConfiguration) {
         val boostPressure = lineColumns[columnConfiguration.boostPressure].toDoubleOrNull()
         val coolantTemperature = lineColumns[columnConfiguration.coolantTemperature].toDoubleOrNull()
         val engineRpm = lineColumns[columnConfiguration.engineRpm].toIntOrNull()
+        val speed = lineColumns[columnConfiguration.speed].toIntOrNull()
 
         return DatalogRecord(
             sessionId = sessionId,
@@ -29,7 +30,8 @@ class RowParsingService(private val columnConfiguration: ColumnConfiguration) {
             intakeAirTemperature = intakeAirTemperature,
             boostPressure = boostPressure,
             coolantTemperature = coolantTemperature,
-            engineRpm = engineRpm
+            engineRpm = engineRpm,
+            speed = speed
         )
     }
 
