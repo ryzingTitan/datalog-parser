@@ -33,6 +33,7 @@ class InputFileStepDefs {
             "${tableRow["Engine RPM(rpm)"]}," +
             "${tableRow["Intake Air Temperature(°F)"]}," +
             "${tableRow["Speed (OBD)(mph)"]}," +
+            "${tableRow["Throttle Position(Manifold)(%)"]}," +
             "${tableRow["Turbo Boost & Vacuum Gauge(psi)"]}"
     }
 }
