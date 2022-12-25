@@ -13,6 +13,7 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017
       database: dataLogging
+      auto-index-creation: true
 
 column-configuration:
   device-time: 1
@@ -33,6 +34,7 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017
       database: cucumberTest
+      auto-index-creation: true
 
 column-configuration:
   device-time: 0
