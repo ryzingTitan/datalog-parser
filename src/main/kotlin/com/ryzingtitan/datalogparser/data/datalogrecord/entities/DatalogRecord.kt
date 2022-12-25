@@ -15,9 +15,9 @@ data class DatalogRecord(
     @Indexed val sessionId: UUID,
     @Indexed(direction = IndexDirection.ASCENDING) val timestamp: Instant,
     val intakeAirTemperature: Int?,
-    val boostPressure: Double?,
+    val boostPressure: Float?,
     val coolantTemperature: Int?,
     val engineRpm: Int?,
     val speed: Int?,
-    val throttlePosition: Double?
+    val throttlePosition: Float?
 )

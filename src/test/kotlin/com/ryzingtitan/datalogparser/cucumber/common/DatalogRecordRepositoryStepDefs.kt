@@ -80,11 +80,11 @@ class DatalogRecordRepositoryStepDefs(private val datalogRecordRepository: Datal
             sessionId = UUID.fromString(tableRow["sessionId"]),
             timestamp = Instant.parse(tableRow["timestamp"]),
             intakeAirTemperature = tableRow["intakeAirTemperature"].toString().toIntOrNull(),
-            boostPressure = tableRow["boostPressure"].toString().toDoubleOrNull(),
+            boostPressure = tableRow["boostPressure"].toString().toFloatOrNull(),
             coolantTemperature = tableRow["coolantTemperature"].toString().toIntOrNull(),
             engineRpm = tableRow["engineRpm"].toString().toIntOrNull(),
             speed = tableRow["speed"].toString().toIntOrNull(),
-            throttlePosition = tableRow["throttlePosition"].toString().toDoubleOrNull()
+            throttlePosition = tableRow["throttlePosition"].toString().toFloatOrNull()
         )
     }
 }
