@@ -18,12 +18,12 @@ class RowParsingService(private val columnConfiguration: ColumnConfiguration) {
         val lineColumns = row.split(',')
 
         val recordTimestamp = parseRowTimestamp(lineColumns[columnConfiguration.deviceTime])
-        val intakeAirTemperature = lineColumns[columnConfiguration.intakeAirTemperature].toDoubleOrNull()?.toInt()
-        val boostPressure = lineColumns[columnConfiguration.boostPressure].toDoubleOrNull()
-        val coolantTemperature = lineColumns[columnConfiguration.coolantTemperature].toDoubleOrNull()?.toInt()
-        val engineRpm = lineColumns[columnConfiguration.engineRpm].toDoubleOrNull()?.toInt()
-        val speed = lineColumns[columnConfiguration.speed].toDoubleOrNull()?.toInt()
-        val throttlePosition = lineColumns[columnConfiguration.throttlePosition].toDoubleOrNull()
+        val intakeAirTemperature = lineColumns[columnConfiguration.intakeAirTemperature].toFloatOrNull()?.toInt()
+        val boostPressure = lineColumns[columnConfiguration.boostPressure].toFloatOrNull()
+        val coolantTemperature = lineColumns[columnConfiguration.coolantTemperature].toFloatOrNull()?.toInt()
+        val engineRpm = lineColumns[columnConfiguration.engineRpm].toFloatOrNull()?.toInt()
+        val speed = lineColumns[columnConfiguration.speed].toFloatOrNull()?.toInt()
+        val throttlePosition = lineColumns[columnConfiguration.throttlePosition].toFloatOrNull()
 
         return DatalogRecord(
             sessionId = sessionId,

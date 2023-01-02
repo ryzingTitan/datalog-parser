@@ -18,10 +18,10 @@ class RowParsingServiceTests {
         @Test
         fun `parses the row correctly when it contains valid session data`() {
             val row = "$firstLineDeviceTime," +
-                "${firstLineCoolantTemperature.toDouble()}," +
-                "${firstLineEngineRpm.toDouble()}," +
-                "${firstLineIntakeAirTemperature.toDouble()}," +
-                "${firstLineSpeed.toDouble()}," +
+                "${firstLineCoolantTemperature.toFloat()}," +
+                "${firstLineEngineRpm.toFloat()}," +
+                "${firstLineIntakeAirTemperature.toFloat()}," +
+                "${firstLineSpeed.toFloat()}," +
                 "$firstLineThrottlePosition," +
                 "$firstLineBoostPressure"
 
@@ -84,11 +84,11 @@ class RowParsingServiceTests {
 
         const val firstLineDeviceTime = "18-Sep-2022 14:15:47.963"
         const val firstLineIntakeAirTemperature = 123
-        const val firstLineBoostPressure = 16.5
+        const val firstLineBoostPressure = 16.5f
         const val firstLineCoolantTemperature = 155
         const val firstLineEngineRpm = 5500
         const val firstLineSpeed = 86
-        const val firstLineThrottlePosition = 95.5
+        const val firstLineThrottlePosition = 95.5f
         val firstLineTimestamp: Instant = Instant.parse("2022-09-18T18:15:47.963Z")
 
         const val secondLineDeviceTime = "18-Sep-2022 14:18:47.968"
