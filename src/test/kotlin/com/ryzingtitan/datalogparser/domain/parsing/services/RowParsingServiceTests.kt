@@ -98,8 +98,8 @@ class RowParsingServiceTests {
         val sessionId: UUID = UUID.fromString("c61cc339-f93d-45a4-aa2b-923f0482b97f")
 
         const val firstLineDeviceTime = "18-Sep-2022 14:15:47.963"
-        const val firstLineLongitude = -86.14162999999999f
-        const val firstLineLatitude = 42.406800000000004f
+        const val firstLineLongitude = -86.14162999999999
+        const val firstLineLatitude = 42.406800000000004
         const val firstLineAltitude = 188.4f
         const val firstLineIntakeAirTemperature = 123
         const val firstLineBoostPressure = 16.5f
@@ -110,8 +110,8 @@ class RowParsingServiceTests {
         val firstLineTimestamp: Instant = Instant.parse("2022-09-18T18:15:47.963Z")
 
         const val secondLineDeviceTime = "18-Sep-2022 14:18:47.968"
-        const val secondLineLongitude = 86.14162999999999f
-        const val secondLineLatitude = -42.406800000000004f
+        const val secondLineLongitude = 86.14162999999999
+        const val secondLineLatitude = -42.406800000000004
         const val secondLineAltitude = 188.0f
         const val secondLineIntakeAirTemperature = "-"
         const val secondLineBoostPressure = "-"

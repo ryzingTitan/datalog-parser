@@ -18,8 +18,8 @@ class RowParsingService(private val columnConfiguration: ColumnConfiguration) {
         val lineColumns = row.split(',')
 
         val recordTimestamp = parseRowTimestamp(lineColumns[columnConfiguration.deviceTime])
-        val longitude = lineColumns[columnConfiguration.longitude].toFloat()
-        val latitude = lineColumns[columnConfiguration.latitude].toFloat()
+        val longitude = lineColumns[columnConfiguration.longitude].toDouble()
+        val latitude = lineColumns[columnConfiguration.latitude].toDouble()
         val altitude = lineColumns[columnConfiguration.altitude].toFloat()
         val intakeAirTemperature = lineColumns[columnConfiguration.intakeAirTemperature].toFloatOrNull()?.toInt()
         val boostPressure = lineColumns[columnConfiguration.boostPressure].toFloatOrNull()

@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "com.ryzingtitan"
-version = "1.6.0"
+version = "1.7.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 configurations {
@@ -122,7 +122,7 @@ tasks.jacocoTestCoverageVerification {
             limit {
                 counter = "LINE"
                 value = "COVEREDRATIO"
-                minimum = "0.84".toBigDecimal()
+                minimum = "0.88".toBigDecimal()
             }
         }
     }

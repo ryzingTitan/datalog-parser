@@ -79,8 +79,8 @@ class FileParsingServiceTests {
     private val datalogRecord = DatalogRecord(
         sessionId = sessionId,
         timestamp = Instant.now(),
-        longitude = -86.14162f,
-        latitude = 42.406800000000004f,
+        longitude = -86.14162,
+        latitude = 42.406800000000004,
         altitude = 188.4f,
         intakeAirTemperature = 138,
         boostPressure = 16.5f,
