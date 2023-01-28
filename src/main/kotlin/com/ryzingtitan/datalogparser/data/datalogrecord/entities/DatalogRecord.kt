@@ -22,5 +22,5 @@ data class DatalogRecord(
     val coolantTemperature: Int?,
     val engineRpm: Int?,
     val speed: Int?,
-    val throttlePosition: Float?
+    val throttlePosition: Float?,
 )

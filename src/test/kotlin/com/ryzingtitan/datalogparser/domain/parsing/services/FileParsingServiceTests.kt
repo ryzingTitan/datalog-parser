@@ -52,7 +52,7 @@ class FileParsingServiceTests {
             mockInputFileRepository,
             mockDatalogRecordRepository,
             mockUuidGenerator,
-            mockRowParsingService
+            mockRowParsingService,
         )
 
         whenever(mockInputFileRepository.getInputFileLines("testFile")).thenReturn(listOf("header row", "data row 1"))
@@ -87,6 +87,6 @@ class FileParsingServiceTests {
         coolantTemperature = 155,
         engineRpm = 3500,
         speed = 79,
-        throttlePosition = 83.2f
+        throttlePosition = 83.2f,
     )
 }

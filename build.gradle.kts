@@ -4,11 +4,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
-    id("org.springframework.boot") version "3.0.1"
+    id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.1.0"
     kotlin("jvm") version "1.8.0"
     kotlin("plugin.spring") version "1.8.0"
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.1.0"
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
     id("com.github.ben-manes.versions") version "0.44.0"
     id("org.sonarqube") version "3.5.0.2730"
@@ -41,13 +41,12 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
-    testImplementation("org.junit.platform:junit-platform-suite-api:1.9.1")
+    testImplementation("org.junit.platform:junit-platform-suite-api:1.9.2")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
-    testImplementation("io.cucumber:cucumber-java:7.10.1")
-    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.10.1")
-    testImplementation("io.cucumber:cucumber-spring:7.10.1")
-    testImplementation("io.projectreactor:reactor-test:3.5.1")
-    testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:4.3.3")
+    testImplementation("io.cucumber:cucumber-java:7.11.0")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.11.0")
+    testImplementation("io.cucumber:cucumber-spring:7.11.0")
+    testImplementation("io.projectreactor:reactor-test:3.5.2")
 }
 
 tasks.withType<KotlinCompile> {
@@ -79,7 +78,7 @@ tasks.getByName("compileKotlin") {
 }
 
 ktlint {
-    version.set("0.45.2")
+    version.set("0.48.2")
     verbose.set(true)
     outputToConsole.set(true)
     coloredOutput.set(true)
@@ -91,7 +90,7 @@ ktlint {
 detekt {
     source = objects.fileCollection().from(
         io.gitlab.arturbosch.detekt.extensions.DetektExtension.DEFAULT_SRC_DIR_KOTLIN,
-        io.gitlab.arturbosch.detekt.extensions.DetektExtension.DEFAULT_TEST_SRC_DIR_KOTLIN
+        io.gitlab.arturbosch.detekt.extensions.DetektExtension.DEFAULT_TEST_SRC_DIR_KOTLIN,
     )
     buildUponDefaultConfig = true
 }

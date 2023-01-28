@@ -17,7 +17,7 @@ class DatalogRecordRepositoryStepDefs(private val datalogRecordRepository: Datal
         val expectedDatalogRecords =
             table.tableConverter.toList<DatalogRecord>(table, DatalogRecord::class.java).sortedBy { it.timestamp }
 
-        val actualDatalogRecords = mutableListOf <DatalogRecord>()
+        val actualDatalogRecords = mutableListOf<DatalogRecord>()
         runBlocking {
             datalogRecordRepository.findAll().collect { datalogRecord ->
                 actualDatalogRecords.add(datalogRecord)
@@ -29,40 +29,40 @@ class DatalogRecordRepositoryStepDefs(private val datalogRecordRepository: Datal
         for (expectedRecordNumber in 0 until expectedDatalogRecords.count()) {
             assertEquals(
                 expectedDatalogRecords[expectedRecordNumber].sessionId,
-                actualDatalogRecords[expectedRecordNumber].sessionId
+                actualDatalogRecords[expectedRecordNumber].sessionId,
             )
             assertEquals(
                 expectedDatalogRecords[expectedRecordNumber].timestamp,
-                actualDatalogRecords[expectedRecordNumber].timestamp
+                actualDatalogRecords[expectedRecordNumber].timestamp,
             )
             assertEquals(
                 expectedDatalogRecords[expectedRecordNumber].intakeAirTemperature,
-                actualDatalogRecords[expectedRecordNumber].intakeAirTemperature
+                actualDatalogRecords[expectedRecordNumber].intakeAirTemperature,
             )
 
             assertEquals(
                 expectedDatalogRecords[expectedRecordNumber].boostPressure,
-                actualDatalogRecords[expectedRecordNumber].boostPressure
+                actualDatalogRecords[expectedRecordNumber].boostPressure,
             )
 
             assertEquals(
                 expectedDatalogRecords[expectedRecordNumber].coolantTemperature,
-                actualDatalogRecords[expectedRecordNumber].coolantTemperature
+                actualDatalogRecords[expectedRecordNumber].coolantTemperature,
             )
 
             assertEquals(
                 expectedDatalogRecords[expectedRecordNumber].engineRpm,
-                actualDatalogRecords[expectedRecordNumber].engineRpm
+                actualDatalogRecords[expectedRecordNumber].engineRpm,
             )
 
             assertEquals(
                 expectedDatalogRecords[expectedRecordNumber].speed,
-                actualDatalogRecords[expectedRecordNumber].speed
+                actualDatalogRecords[expectedRecordNumber].speed,
             )
 
             assertEquals(
                 expectedDatalogRecords[expectedRecordNumber].throttlePosition,
-                actualDatalogRecords[expectedRecordNumber].throttlePosition
+                actualDatalogRecords[expectedRecordNumber].throttlePosition,
             )
         }
     }
@@ -87,7 +87,7 @@ class DatalogRecordRepositoryStepDefs(private val datalogRecordRepository: Datal
             coolantTemperature = tableRow["coolantTemperature"].toString().toIntOrNull(),
             engineRpm = tableRow["engineRpm"].toString().toIntOrNull(),
             speed = tableRow["speed"].toString().toIntOrNull(),
-            throttlePosition = tableRow["throttlePosition"].toString().toFloatOrNull()
+            throttlePosition = tableRow["throttlePosition"].toString().toFloatOrNull(),
         )
     }
 }

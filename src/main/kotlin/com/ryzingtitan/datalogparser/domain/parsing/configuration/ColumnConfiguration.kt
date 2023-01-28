@@ -15,5 +15,5 @@ data class ColumnConfiguration(
     val coolantTemperature: Int,
     val engineRpm: Int,
     val speed: Int,
-    val throttlePosition: Int
+    val throttlePosition: Int,
 )

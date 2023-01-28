@@ -39,7 +39,7 @@ class RowParsingService(private val columnConfiguration: ColumnConfiguration) {
             coolantTemperature = coolantTemperature,
             engineRpm = engineRpm,
             speed = speed,
-            throttlePosition = throttlePosition
+            throttlePosition = throttlePosition,
         )
     }
 
