@@ -18,7 +18,8 @@ class FileParsingService(
     private val logger: Logger = LoggerFactory.getLogger(FileParsingService::class.java)
 
     fun parse(filePath: String) {
-        logger.info("Beginning to parse file: $filePath")
+        val fileName = filePath.split('\\', '/').last()
+        logger.info("Beginning to parse file: $fileName")
 
         val fileLines = inputFileRepository.getInputFileLines(filePath)
         val fileLinesWithoutHeader = removeHeaderRow(fileLines)
@@ -32,7 +33,7 @@ class FileParsingService(
             }
         }
 
-        logger.info("File parsing completed for file: $filePath")
+        logger.info("File parsing completed for file: $fileName")
     }
 
     fun removeHeaderRow(fileLines: List<String>): List<String> {
