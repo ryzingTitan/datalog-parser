@@ -18,6 +18,9 @@ class RowParsingService(private val columnConfiguration: ColumnConfiguration) {
         val lineColumns = row.split(',')
 
         val recordTimestamp = parseRowTimestamp(lineColumns[columnConfiguration.deviceTime])
+        val longitude = lineColumns[columnConfiguration.longitude].toFloat()
+        val latitude = lineColumns[columnConfiguration.latitude].toFloat()
+        val altitude = lineColumns[columnConfiguration.altitude].toFloat()
         val intakeAirTemperature = lineColumns[columnConfiguration.intakeAirTemperature].toFloatOrNull()?.toInt()
         val boostPressure = lineColumns[columnConfiguration.boostPressure].toFloatOrNull()
         val coolantTemperature = lineColumns[columnConfiguration.coolantTemperature].toFloatOrNull()?.toInt()
@@ -28,6 +31,9 @@ class RowParsingService(private val columnConfiguration: ColumnConfiguration) {
         return DatalogRecord(
             sessionId = sessionId,
             timestamp = recordTimestamp,
+            longitude = longitude,
+            latitude = latitude,
+            altitude = altitude,
             intakeAirTemperature = intakeAirTemperature,
             boostPressure = boostPressure,
             coolantTemperature = coolantTemperature,

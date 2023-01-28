@@ -17,6 +17,9 @@ spring:
 
 column-configuration:
   device-time: 1
+  longitude: 2
+  latitude: 3
+  altitude: 6
   coolant-temperature: 12
   engine-rpm: 13
   intake-air-temperature: 14
@@ -38,9 +41,12 @@ spring:
 
 column-configuration:
   device-time: 0
-  coolant-temperature: 1
-  engine-rpm: 2
-  intake-air-temperature: 3
-  speed: 4
-  throttle-position: 5
-  boost-pressure: 6
+  longitude: 1
+  latitude: 2
+  altitude: 3
+  coolant-temperature: 4
+  engine-rpm: 5
+  intake-air-temperature: 6
+  speed: 7
+  throttle-position: 8
+  boost-pressure: 9

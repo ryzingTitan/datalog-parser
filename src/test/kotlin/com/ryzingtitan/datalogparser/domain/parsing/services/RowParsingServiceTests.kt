@@ -18,6 +18,9 @@ class RowParsingServiceTests {
         @Test
         fun `parses the row correctly when it contains valid session data`() {
             val row = "$firstLineDeviceTime," +
+                "$firstLineLongitude," +
+                "$firstLineLatitude," +
+                "$firstLineAltitude," +
                 "${firstLineCoolantTemperature.toFloat()}," +
                 "${firstLineEngineRpm.toFloat()}," +
                 "${firstLineIntakeAirTemperature.toFloat()}," +
@@ -30,6 +33,9 @@ class RowParsingServiceTests {
             assertNotNull(datalogRecord.recordId)
             assertEquals(sessionId, datalogRecord.sessionId)
             assertEquals(firstLineTimestamp, datalogRecord.timestamp)
+            assertEquals(firstLineLongitude, datalogRecord.longitude)
+            assertEquals(firstLineLatitude, datalogRecord.latitude)
+            assertEquals(firstLineAltitude, datalogRecord.altitude)
             assertEquals(firstLineIntakeAirTemperature, datalogRecord.intakeAirTemperature)
             assertEquals(firstLineBoostPressure, datalogRecord.boostPressure)
             assertEquals(firstLineCoolantTemperature, datalogRecord.coolantTemperature)
@@ -41,6 +47,9 @@ class RowParsingServiceTests {
         @Test
         fun `parses the row correctly when it contains invalid session data`() {
             val row = "$secondLineDeviceTime," +
+                "$secondLineLongitude," +
+                "$secondLineLatitude," +
+                "$secondLineAltitude," +
                 "$secondLineCoolantTemperature," +
                 "$secondLineEngineRpm," +
                 "$secondLineIntakeAirTemperature," +
@@ -53,6 +62,9 @@ class RowParsingServiceTests {
             assertNotNull(datalogRecord.recordId)
             assertEquals(sessionId, datalogRecord.sessionId)
             assertEquals(secondLineTimestamp, datalogRecord.timestamp)
+            assertEquals(secondLineLongitude, datalogRecord.longitude)
+            assertEquals(secondLineLatitude, datalogRecord.latitude)
+            assertEquals(secondLineAltitude, datalogRecord.altitude)
             assertNull(datalogRecord.intakeAirTemperature)
             assertNull(datalogRecord.boostPressure)
             assertNull(datalogRecord.coolantTemperature)
@@ -67,12 +79,15 @@ class RowParsingServiceTests {
         rowParsingService = RowParsingService(mockColumnConfiguration)
 
         whenever(mockColumnConfiguration.deviceTime).thenReturn(0)
-        whenever(mockColumnConfiguration.coolantTemperature).thenReturn(1)
-        whenever(mockColumnConfiguration.engineRpm).thenReturn(2)
-        whenever(mockColumnConfiguration.intakeAirTemperature).thenReturn(3)
-        whenever(mockColumnConfiguration.speed).thenReturn(4)
-        whenever(mockColumnConfiguration.throttlePosition).thenReturn(5)
-        whenever(mockColumnConfiguration.boostPressure).thenReturn(6)
+        whenever(mockColumnConfiguration.longitude).thenReturn(1)
+        whenever(mockColumnConfiguration.latitude).thenReturn(2)
+        whenever(mockColumnConfiguration.altitude).thenReturn(3)
+        whenever(mockColumnConfiguration.coolantTemperature).thenReturn(4)
+        whenever(mockColumnConfiguration.engineRpm).thenReturn(5)
+        whenever(mockColumnConfiguration.intakeAirTemperature).thenReturn(6)
+        whenever(mockColumnConfiguration.speed).thenReturn(7)
+        whenever(mockColumnConfiguration.throttlePosition).thenReturn(8)
+        whenever(mockColumnConfiguration.boostPressure).thenReturn(9)
     }
 
     private lateinit var rowParsingService: RowParsingService
@@ -83,6 +98,9 @@ class RowParsingServiceTests {
         val sessionId: UUID = UUID.fromString("c61cc339-f93d-45a4-aa2b-923f0482b97f")
 
         const val firstLineDeviceTime = "18-Sep-2022 14:15:47.963"
+        const val firstLineLongitude = -86.14162999999999f
+        const val firstLineLatitude = 42.406800000000004f
+        const val firstLineAltitude = 188.4f
         const val firstLineIntakeAirTemperature = 123
         const val firstLineBoostPressure = 16.5f
         const val firstLineCoolantTemperature = 155
@@ -92,6 +110,9 @@ class RowParsingServiceTests {
         val firstLineTimestamp: Instant = Instant.parse("2022-09-18T18:15:47.963Z")
 
         const val secondLineDeviceTime = "18-Sep-2022 14:18:47.968"
+        const val secondLineLongitude = 86.14162999999999f
+        const val secondLineLatitude = -42.406800000000004f
+        const val secondLineAltitude = 188.0f
         const val secondLineIntakeAirTemperature = "-"
         const val secondLineBoostPressure = "-"
         const val secondLineCoolantTemperature = "-"
