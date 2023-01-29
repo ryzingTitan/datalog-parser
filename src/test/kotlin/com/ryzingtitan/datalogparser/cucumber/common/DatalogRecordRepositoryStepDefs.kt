@@ -1,21 +1,37 @@
 package com.ryzingtitan.datalogparser.cucumber.common
 
+import com.ryzingtitan.datalogparser.cucumber.components.StaticUuidGenerator.StaticUuidGeneratorSharedState.sessionId
 import com.ryzingtitan.datalogparser.data.datalogrecord.entities.DatalogRecord
 import com.ryzingtitan.datalogparser.data.datalogrecord.repositories.DatalogRecordRepository
 import io.cucumber.datatable.DataTable
 import io.cucumber.java.Before
 import io.cucumber.java.DataTableType
+import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
-import java.time.Instant
 import java.util.*
 
 class DatalogRecordRepositoryStepDefs(private val datalogRecordRepository: DatalogRecordRepository) {
-    @Then("the following data log records will be created:")
-    fun thenTheFollowingDatalogRecordsWillBeCreated(table: DataTable) {
+    @Given("the following datalog records exist:")
+    fun givenTheFollowingDatalogRecordsExist(table: DataTable) {
+        val existingDatalogRecords =
+            table.tableConverter.toList<DatalogRecord>(table, DatalogRecord::class.java)
+
+        runBlocking {
+            existingDatalogRecords.forEach { existingDatalogRecord ->
+                datalogRecordRepository.save(existingDatalogRecord)
+            }
+        }
+
+        sessionId = UUID.fromString("9628a8bb-0a44-4c31-af7d-a54ff16f080f")
+    }
+
+    @Then("the following datalog records will exist:")
+    fun thenTheFollowingDatalogRecordsWillExist(table: DataTable) {
         val expectedDatalogRecords =
-            table.tableConverter.toList<DatalogRecord>(table, DatalogRecord::class.java).sortedBy { it.timestamp }
+            table.tableConverter.toList<DatalogRecord>(table, DatalogRecord::class.java)
+                .sortedBy { it.epochMilliseconds }
 
         val actualDatalogRecords = mutableListOf<DatalogRecord>()
         runBlocking {
@@ -24,47 +40,10 @@ class DatalogRecordRepositoryStepDefs(private val datalogRecordRepository: Datal
             }
         }
 
-        assertEquals(expectedDatalogRecords.count(), actualDatalogRecords.count())
-
-        for (expectedRecordNumber in 0 until expectedDatalogRecords.count()) {
-            assertEquals(
-                expectedDatalogRecords[expectedRecordNumber].sessionId,
-                actualDatalogRecords[expectedRecordNumber].sessionId,
-            )
-            assertEquals(
-                expectedDatalogRecords[expectedRecordNumber].timestamp,
-                actualDatalogRecords[expectedRecordNumber].timestamp,
-            )
-            assertEquals(
-                expectedDatalogRecords[expectedRecordNumber].intakeAirTemperature,
-                actualDatalogRecords[expectedRecordNumber].intakeAirTemperature,
-            )
-
-            assertEquals(
-                expectedDatalogRecords[expectedRecordNumber].boostPressure,
-                actualDatalogRecords[expectedRecordNumber].boostPressure,
-            )
-
-            assertEquals(
-                expectedDatalogRecords[expectedRecordNumber].coolantTemperature,
-                actualDatalogRecords[expectedRecordNumber].coolantTemperature,
-            )
-
-            assertEquals(
-                expectedDatalogRecords[expectedRecordNumber].engineRpm,
-                actualDatalogRecords[expectedRecordNumber].engineRpm,
-            )
-
-            assertEquals(
-                expectedDatalogRecords[expectedRecordNumber].speed,
-                actualDatalogRecords[expectedRecordNumber].speed,
-            )
-
-            assertEquals(
-                expectedDatalogRecords[expectedRecordNumber].throttlePosition,
-                actualDatalogRecords[expectedRecordNumber].throttlePosition,
-            )
-        }
+        assertEquals(
+            expectedDatalogRecords.sortedBy { it.epochMilliseconds },
+            actualDatalogRecords.sortedBy { it.epochMilliseconds },
+        )
     }
 
     @Before
@@ -78,7 +57,7 @@ class DatalogRecordRepositoryStepDefs(private val datalogRecordRepository: Datal
     fun mapDatalogRecord(tableRow: Map<String, String>): DatalogRecord {
         return DatalogRecord(
             sessionId = UUID.fromString(tableRow["sessionId"]),
-            timestamp = Instant.parse(tableRow["timestamp"]),
+            epochMilliseconds = tableRow["epochMilliseconds"].toString().toLong(),
             longitude = tableRow["longitude"].toString().toDouble(),
             latitude = tableRow["latitude"].toString().toDouble(),
             altitude = tableRow["altitude"].toString().toFloat(),

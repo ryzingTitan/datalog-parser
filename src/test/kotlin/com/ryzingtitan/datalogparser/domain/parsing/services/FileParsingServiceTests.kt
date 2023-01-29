@@ -78,7 +78,7 @@ class FileParsingServiceTests {
     private val sessionId = UUID.randomUUID()
     private val datalogRecord = DatalogRecord(
         sessionId = sessionId,
-        timestamp = Instant.now(),
+        epochMilliseconds = Instant.now().toEpochMilli(),
         longitude = -86.14162,
         latitude = 42.406800000000004,
         altitude = 188.4f,
