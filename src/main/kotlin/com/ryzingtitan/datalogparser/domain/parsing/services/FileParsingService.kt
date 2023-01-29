@@ -13,7 +13,7 @@ class FileParsingService(
     private val inputFileRepository: InputFileRepository,
     private val datalogRecordRepository: DatalogRecordRepository,
     private val uuidGenerator: UuidGenerator,
-    private val rowParsingService: RowParsingService
+    private val rowParsingService: RowParsingService,
 ) {
     private val logger: Logger = LoggerFactory.getLogger(FileParsingService::class.java)
 
