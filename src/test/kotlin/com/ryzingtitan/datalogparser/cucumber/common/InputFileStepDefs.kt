@@ -1,29 +1,33 @@
 package com.ryzingtitan.datalogparser.cucumber.common
 
-import com.ryzingtitan.datalogparser.cucumber.repositories.InMemoryInputFileRepository
 import io.cucumber.datatable.DataTable
+import io.cucumber.java.Before
 import io.cucumber.java.DataTableType
 import io.cucumber.java.en.Given
+import java.nio.file.Files
+import java.nio.file.Path
 
 class InputFileStepDefs {
     @Given("a file with the following rows:")
     fun givenAFileWithTheFollowingData(table: DataTable) {
-        InMemoryInputFileRepository.fileLines = mutableListOf()
-        createHeaderRow(table)
-        createDataRows(table)
+        val fileLines = mutableListOf<String>()
+        fileLines.addAll(createHeaderRow(table))
+        fileLines.addAll(createDataRows(table))
+
+        Files.createDirectory(Path.of("testFiles"))
+        Files.write(Path.of("testFiles", "testFile.txt"), fileLines)
     }
 
-    private fun createHeaderRow(table: DataTable) {
+    private fun createHeaderRow(table: DataTable): List<String> {
         val headerLine = StringBuilder()
         table.row(0).forEach { headerValue ->
             headerLine.append(headerValue).append(',')
         }
-        InMemoryInputFileRepository.fileLines.add(headerLine.toString().trimEnd(','))
+        return listOf(headerLine.toString().trimEnd(','))
     }
 
-    private fun createDataRows(table: DataTable) {
-        val dataLines = table.tableConverter.toList<String>(table, String::class.java)
-        InMemoryInputFileRepository.fileLines.addAll(dataLines)
+    private fun createDataRows(table: DataTable): List<String> {
+        return table.tableConverter.toList(table, String::class.java)
     }
 
     @DataTableType
@@ -38,5 +42,11 @@ class InputFileStepDefs {
             "${tableRow["Speed (OBD)(mph)"]}," +
             "${tableRow["Throttle Position(Manifold)(%)"]}," +
             "${tableRow["Turbo Boost & Vacuum Gauge(psi)"]}"
+    }
+
+    @Before
+    fun setup() {
+        Files.deleteIfExists(Path.of("testFiles", "testFile.txt"))
+        Files.deleteIfExists(Path.of("testFiles"))
     }
 }

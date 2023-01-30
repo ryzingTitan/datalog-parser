@@ -20,8 +20,8 @@ ___
 * Build the JAR file: `./gradlew clean build`
   * This will place a ZIP file with the application in the `./build/distributions` folder
 * Copy the ZIP file to the location where you want to run the application and unzip the folder
-* Run the application. The first argument must be the path to the file that will be parsed 
-  * `java -jar datalog-parser.jar dataFile.txt`
+* Run the application. The first argument must be the path to the folder where the files to be parsed are located 
+  * `java -jar datalog-parser.jar /dataFolder/dataFile.txt`
 
 ### Integration Tests
 ___
