@@ -2,7 +2,6 @@ package com.ryzingtitan.datalogparser.domain.parsing.services
 
 import com.ryzingtitan.datalogparser.domain.parsing.configuration.ColumnConfiguration
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -30,9 +29,8 @@ class RowParsingServiceTests {
 
             val datalogRecord = rowParsingService.parse(row, sessionId)
 
-            assertNotNull(datalogRecord.recordId)
             assertEquals(sessionId, datalogRecord.sessionId)
-            assertEquals(firstLineTimestamp, datalogRecord.timestamp)
+            assertEquals(firstLineEpochMilliseconds, datalogRecord.epochMilliseconds)
             assertEquals(firstLineLongitude, datalogRecord.longitude)
             assertEquals(firstLineLatitude, datalogRecord.latitude)
             assertEquals(firstLineAltitude, datalogRecord.altitude)
@@ -59,9 +57,8 @@ class RowParsingServiceTests {
 
             val datalogRecord = rowParsingService.parse(row, sessionId)
 
-            assertNotNull(datalogRecord.recordId)
             assertEquals(sessionId, datalogRecord.sessionId)
-            assertEquals(secondLineTimestamp, datalogRecord.timestamp)
+            assertEquals(secondLineEpochMilliseconds, datalogRecord.epochMilliseconds)
             assertEquals(secondLineLongitude, datalogRecord.longitude)
             assertEquals(secondLineLatitude, datalogRecord.latitude)
             assertEquals(secondLineAltitude, datalogRecord.altitude)
@@ -107,7 +104,7 @@ class RowParsingServiceTests {
         const val firstLineEngineRpm = 5500
         const val firstLineSpeed = 86
         const val firstLineThrottlePosition = 95.5f
-        val firstLineTimestamp: Instant = Instant.parse("2022-09-18T18:15:47.963Z")
+        val firstLineEpochMilliseconds = Instant.parse("2022-09-18T18:15:47.963Z").toEpochMilli()
 
         const val secondLineDeviceTime = "18-Sep-2022 14:18:47.968"
         const val secondLineLongitude = 86.14162999999999
@@ -119,6 +116,6 @@ class RowParsingServiceTests {
         const val secondLineEngineRpm = "-"
         const val secondLineSpeed = "-"
         const val secondLineThrottlePosition = "-"
-        val secondLineTimestamp: Instant = Instant.parse("2022-09-18T18:18:47.968Z")
+        val secondLineEpochMilliseconds = Instant.parse("2022-09-18T18:18:47.968Z").toEpochMilli()
     }
 }

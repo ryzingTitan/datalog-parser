@@ -30,7 +30,7 @@ class RowParsingService(private val columnConfiguration: ColumnConfiguration) {
 
         return DatalogRecord(
             sessionId = sessionId,
-            timestamp = recordTimestamp,
+            epochMilliseconds = recordTimestamp.toEpochMilli(),
             longitude = longitude,
             latitude = latitude,
             altitude = altitude,
