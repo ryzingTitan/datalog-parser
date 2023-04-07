@@ -88,5 +88,6 @@ class FileParsingServiceTests {
         engineRpm = 3500,
         speed = 79,
         throttlePosition = 83.2f,
+        airFuelRatio = 17.5f,
     )
 }

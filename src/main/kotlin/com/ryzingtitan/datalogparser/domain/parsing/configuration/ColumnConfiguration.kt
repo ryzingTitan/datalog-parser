@@ -16,4 +16,5 @@ data class ColumnConfiguration(
     val engineRpm: Int,
     val speed: Int,
     val throttlePosition: Int,
+    val airFuelRatio: Int,
 )
