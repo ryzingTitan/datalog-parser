@@ -41,7 +41,8 @@ class InputFileStepDefs {
             "${tableRow["Intake Air Temperature(°F)"]}," +
             "${tableRow["Speed (OBD)(mph)"]}," +
             "${tableRow["Throttle Position(Manifold)(%)"]}," +
-            "${tableRow["Turbo Boost & Vacuum Gauge(psi)"]}"
+            "${tableRow["Turbo Boost & Vacuum Gauge(psi)"]}," +
+            "${tableRow["Air Fuel Ratio(Measured)(:1)"]}"
     }
 
     @Before

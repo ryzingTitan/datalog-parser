@@ -2,6 +2,7 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import java.util.*
 
 plugins {
     id("org.springframework.boot") version "3.0.5"
@@ -19,7 +20,7 @@ plugins {
 }
 
 group = "com.ryzingtitan"
-version = "2.1.0"
+version = "2.2.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 configurations {
@@ -141,7 +142,7 @@ tasks.withType<DependencyUpdatesTask> {
 }
 
 fun String.isNonStable(): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { toUpperCase().contains(it) }
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { uppercase(Locale.getDefault()).contains(it) }
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
     val isStable = stableKeyword || regex.matches(this)
     return isStable.not()

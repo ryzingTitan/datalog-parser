@@ -27,6 +27,7 @@ class RowParsingService(private val columnConfiguration: ColumnConfiguration) {
         val engineRpm = lineColumns[columnConfiguration.engineRpm].toFloatOrNull()?.toInt()
         val speed = lineColumns[columnConfiguration.speed].toFloatOrNull()?.toInt()
         val throttlePosition = lineColumns[columnConfiguration.throttlePosition].toFloatOrNull()
+        val airFuelRatio = lineColumns[columnConfiguration.airFuelRatio].toFloatOrNull()
 
         return DatalogRecord(
             sessionId = sessionId,
@@ -40,6 +41,7 @@ class RowParsingService(private val columnConfiguration: ColumnConfiguration) {
             engineRpm = engineRpm,
             speed = speed,
             throttlePosition = throttlePosition,
+            airFuelRatio = airFuelRatio,
         )
     }
 

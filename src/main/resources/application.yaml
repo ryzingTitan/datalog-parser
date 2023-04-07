@@ -26,6 +26,7 @@ column-configuration:
   speed: 15
   throttle-position: 16
   boost-pressure: 17
+  air-fuel-ratio:
 
 
 ---
@@ -50,3 +51,4 @@ column-configuration:
   speed: 7
   throttle-position: 8
   boost-pressure: 9
+  air-fuel-ratio: 10
