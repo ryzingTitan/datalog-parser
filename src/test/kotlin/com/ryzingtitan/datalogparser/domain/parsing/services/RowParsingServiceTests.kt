@@ -25,7 +25,8 @@ class RowParsingServiceTests {
                 "${firstLineIntakeAirTemperature.toFloat()}," +
                 "${firstLineSpeed.toFloat()}," +
                 "$firstLineThrottlePosition," +
-                "$firstLineBoostPressure"
+                "$firstLineBoostPressure," +
+                firstLineAirFuelRatio
 
             val datalogRecord = rowParsingService.parse(row, sessionId)
 
@@ -40,6 +41,7 @@ class RowParsingServiceTests {
             assertEquals(firstLineEngineRpm, datalogRecord.engineRpm)
             assertEquals(firstLineSpeed, datalogRecord.speed)
             assertEquals(firstLineThrottlePosition, datalogRecord.throttlePosition)
+            assertEquals(firstLineAirFuelRatio, datalogRecord.airFuelRatio)
         }
 
         @Test
@@ -53,7 +55,8 @@ class RowParsingServiceTests {
                 "$secondLineIntakeAirTemperature," +
                 "$secondLineSpeed," +
                 "$secondLineThrottlePosition," +
-                secondLineBoostPressure
+                "$secondLineBoostPressure," +
+                secondLineAirFuelRatio
 
             val datalogRecord = rowParsingService.parse(row, sessionId)
 
@@ -68,6 +71,7 @@ class RowParsingServiceTests {
             assertNull(datalogRecord.engineRpm)
             assertNull(datalogRecord.speed)
             assertNull(datalogRecord.throttlePosition)
+            assertNull(datalogRecord.airFuelRatio)
         }
     }
 
@@ -85,6 +89,7 @@ class RowParsingServiceTests {
         whenever(mockColumnConfiguration.speed).thenReturn(7)
         whenever(mockColumnConfiguration.throttlePosition).thenReturn(8)
         whenever(mockColumnConfiguration.boostPressure).thenReturn(9)
+        whenever(mockColumnConfiguration.airFuelRatio).thenReturn(10)
     }
 
     private lateinit var rowParsingService: RowParsingService
@@ -104,6 +109,7 @@ class RowParsingServiceTests {
         const val firstLineEngineRpm = 5500
         const val firstLineSpeed = 86
         const val firstLineThrottlePosition = 95.5f
+        const val firstLineAirFuelRatio = 14.7f
         val firstLineEpochMilliseconds = Instant.parse("2022-09-18T18:15:47.963Z").toEpochMilli()
 
         const val secondLineDeviceTime = "18-Sep-2022 14:18:47.968"
@@ -116,6 +122,7 @@ class RowParsingServiceTests {
         const val secondLineEngineRpm = "-"
         const val secondLineSpeed = "-"
         const val secondLineThrottlePosition = "-"
+        const val secondLineAirFuelRatio = "-"
         val secondLineEpochMilliseconds = Instant.parse("2022-09-18T18:18:47.968Z").toEpochMilli()
     }
 }
