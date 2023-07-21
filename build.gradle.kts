@@ -20,7 +20,7 @@ plugins {
 }
 
 group = "com.ryzingtitan"
-version = "2.3.0"
+version = "3.0.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 configurations {
