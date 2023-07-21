@@ -20,14 +20,23 @@ column-configuration:
   longitude: 2
   latitude: 3
   altitude: 6
-  coolant-temperature: 12
-  engine-rpm: 13
-  intake-air-temperature: 14
-  speed: 15
-  throttle-position: 16
-  boost-pressure: 17
-  air-fuel-ratio:
+  air-fuel-ratio: 12
+  coolant-temperature: 13
+  engine-rpm: 14
+  intake-air-temperature: 15
+  speed: 16
+  throttle-position: 17
+  boost-pressure: 18
 
+user:
+  first-name:
+  last-name:
+  email:
+
+track-info:
+  name: GingerMan (long)
+  latitude: 42.4086
+  longitude: -86.1374
 
 ---
 spring:
@@ -52,3 +61,13 @@ column-configuration:
   throttle-position: 8
   boost-pressure: 9
   air-fuel-ratio: 10
+
+user:
+  first-name: test
+  last-name: tester
+  email: test@test.com
+
+track-info:
+  name: Test Track
+  latitude: 42.4086
+  longitude: -86.1374

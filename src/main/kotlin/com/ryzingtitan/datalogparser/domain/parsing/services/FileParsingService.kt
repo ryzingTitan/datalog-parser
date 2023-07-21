@@ -1,6 +1,6 @@
 package com.ryzingtitan.datalogparser.domain.parsing.services
 
-import com.ryzingtitan.datalogparser.data.datalogrecord.repositories.DatalogRecordRepository
+import com.ryzingtitan.datalogparser.data.datalog.repositories.DatalogRepository
 import com.ryzingtitan.datalogparser.data.inputfile.repositories.InputFileRepository
 import com.ryzingtitan.datalogparser.domain.uuid.UuidGenerator
 import kotlinx.coroutines.runBlocking
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 @Service
 class FileParsingService(
     private val inputFileRepository: InputFileRepository,
-    private val datalogRecordRepository: DatalogRecordRepository,
+    private val datalogRepository: DatalogRepository,
     private val uuidGenerator: UuidGenerator,
     private val rowParsingService: RowParsingService,
 ) {
@@ -26,10 +26,10 @@ class FileParsingService(
 
         val sessionId = uuidGenerator.generate()
         fileLinesWithoutHeader.forEach { fileLine ->
-            val datalogRecord = rowParsingService.parse(fileLine, sessionId)
+            val datalog = rowParsingService.parse(fileLine, sessionId)
 
             runBlocking {
-                datalogRecordRepository.save(datalogRecord)
+                datalogRepository.save(datalog)
             }
         }
 

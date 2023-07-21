@@ -1,6 +1,8 @@
 package com.ryzingtitan.datalogparser.domain.parsing.services
 
 import com.ryzingtitan.datalogparser.domain.parsing.configuration.ColumnConfiguration
+import com.ryzingtitan.datalogparser.domain.parsing.configuration.TrackInfoConfiguration
+import com.ryzingtitan.datalogparser.domain.parsing.configuration.UserConfiguration
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
@@ -28,20 +30,26 @@ class RowParsingServiceTests {
                 "$firstLineBoostPressure," +
                 firstLineAirFuelRatio
 
-            val datalogRecord = rowParsingService.parse(row, sessionId)
+            val datalog = rowParsingService.parse(row, sessionId)
 
-            assertEquals(sessionId, datalogRecord.sessionId)
-            assertEquals(firstLineEpochMilliseconds, datalogRecord.epochMilliseconds)
-            assertEquals(firstLineLongitude, datalogRecord.longitude)
-            assertEquals(firstLineLatitude, datalogRecord.latitude)
-            assertEquals(firstLineAltitude, datalogRecord.altitude)
-            assertEquals(firstLineIntakeAirTemperature, datalogRecord.intakeAirTemperature)
-            assertEquals(firstLineBoostPressure, datalogRecord.boostPressure)
-            assertEquals(firstLineCoolantTemperature, datalogRecord.coolantTemperature)
-            assertEquals(firstLineEngineRpm, datalogRecord.engineRpm)
-            assertEquals(firstLineSpeed, datalogRecord.speed)
-            assertEquals(firstLineThrottlePosition, datalogRecord.throttlePosition)
-            assertEquals(firstLineAirFuelRatio, datalogRecord.airFuelRatio)
+            assertEquals(sessionId, datalog.sessionId)
+            assertEquals(firstLineEpochMilliseconds, datalog.epochMilliseconds)
+            assertEquals(firstLineLongitude, datalog.data.longitude)
+            assertEquals(firstLineLatitude, datalog.data.latitude)
+            assertEquals(firstLineAltitude, datalog.data.altitude)
+            assertEquals(firstLineIntakeAirTemperature, datalog.data.intakeAirTemperature)
+            assertEquals(firstLineBoostPressure, datalog.data.boostPressure)
+            assertEquals(firstLineCoolantTemperature, datalog.data.coolantTemperature)
+            assertEquals(firstLineEngineRpm, datalog.data.engineRpm)
+            assertEquals(firstLineSpeed, datalog.data.speed)
+            assertEquals(firstLineThrottlePosition, datalog.data.throttlePosition)
+            assertEquals(firstLineAirFuelRatio, datalog.data.airFuelRatio)
+            assertEquals("Test Track", datalog.trackInfo.name)
+            assertEquals(42.4086, datalog.trackInfo.latitude)
+            assertEquals(-86.1374, datalog.trackInfo.longitude)
+            assertEquals("test@test.com", datalog.user.email)
+            assertEquals("test", datalog.user.firstName)
+            assertEquals("tester", datalog.user.lastName)
         }
 
         @Test
@@ -58,26 +66,36 @@ class RowParsingServiceTests {
                 "$secondLineBoostPressure," +
                 secondLineAirFuelRatio
 
-            val datalogRecord = rowParsingService.parse(row, sessionId)
+            val datalog = rowParsingService.parse(row, sessionId)
 
-            assertEquals(sessionId, datalogRecord.sessionId)
-            assertEquals(secondLineEpochMilliseconds, datalogRecord.epochMilliseconds)
-            assertEquals(secondLineLongitude, datalogRecord.longitude)
-            assertEquals(secondLineLatitude, datalogRecord.latitude)
-            assertEquals(secondLineAltitude, datalogRecord.altitude)
-            assertNull(datalogRecord.intakeAirTemperature)
-            assertNull(datalogRecord.boostPressure)
-            assertNull(datalogRecord.coolantTemperature)
-            assertNull(datalogRecord.engineRpm)
-            assertNull(datalogRecord.speed)
-            assertNull(datalogRecord.throttlePosition)
-            assertNull(datalogRecord.airFuelRatio)
+            assertEquals(sessionId, datalog.sessionId)
+            assertEquals(secondLineEpochMilliseconds, datalog.epochMilliseconds)
+            assertEquals(secondLineLongitude, datalog.data.longitude)
+            assertEquals(secondLineLatitude, datalog.data.latitude)
+            assertEquals(secondLineAltitude, datalog.data.altitude)
+            assertNull(datalog.data.intakeAirTemperature)
+            assertNull(datalog.data.boostPressure)
+            assertNull(datalog.data.coolantTemperature)
+            assertNull(datalog.data.engineRpm)
+            assertNull(datalog.data.speed)
+            assertNull(datalog.data.throttlePosition)
+            assertNull(datalog.data.airFuelRatio)
+            assertEquals("Test Track", datalog.trackInfo.name)
+            assertEquals(42.4086, datalog.trackInfo.latitude)
+            assertEquals(-86.1374, datalog.trackInfo.longitude)
+            assertEquals("test@test.com", datalog.user.email)
+            assertEquals("test", datalog.user.firstName)
+            assertEquals("tester", datalog.user.lastName)
         }
     }
 
     @BeforeEach
     fun setup() {
-        rowParsingService = RowParsingService(mockColumnConfiguration)
+        rowParsingService = RowParsingService(
+            mockColumnConfiguration,
+            mockUserConfiguration,
+            mockTrackInfoConfiguration,
+        )
 
         whenever(mockColumnConfiguration.deviceTime).thenReturn(0)
         whenever(mockColumnConfiguration.longitude).thenReturn(1)
@@ -90,11 +108,21 @@ class RowParsingServiceTests {
         whenever(mockColumnConfiguration.throttlePosition).thenReturn(8)
         whenever(mockColumnConfiguration.boostPressure).thenReturn(9)
         whenever(mockColumnConfiguration.airFuelRatio).thenReturn(10)
+
+        whenever(mockUserConfiguration.email).thenReturn("test@test.com")
+        whenever(mockUserConfiguration.firstName).thenReturn("test")
+        whenever(mockUserConfiguration.lastName).thenReturn("tester")
+
+        whenever(mockTrackInfoConfiguration.name).thenReturn("Test Track")
+        whenever(mockTrackInfoConfiguration.latitude).thenReturn(42.4086)
+        whenever(mockTrackInfoConfiguration.longitude).thenReturn(-86.1374)
     }
 
     private lateinit var rowParsingService: RowParsingService
 
     private val mockColumnConfiguration = mock<ColumnConfiguration>()
+    private val mockTrackInfoConfiguration = mock<TrackInfoConfiguration>()
+    private val mockUserConfiguration = mock<UserConfiguration>()
 
     companion object RowParsingServiceTestConstants {
         val sessionId: UUID = UUID.fromString("c61cc339-f93d-45a4-aa2b-923f0482b97f")
