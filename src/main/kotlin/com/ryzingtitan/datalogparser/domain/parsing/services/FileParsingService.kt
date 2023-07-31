@@ -3,10 +3,12 @@ package com.ryzingtitan.datalogparser.domain.parsing.services
 import com.ryzingtitan.datalogparser.data.datalog.repositories.DatalogRepository
 import com.ryzingtitan.datalogparser.data.inputfile.repositories.InputFileRepository
 import com.ryzingtitan.datalogparser.domain.uuid.UuidGenerator
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class FileParsingService(
@@ -14,6 +16,7 @@ class FileParsingService(
     private val datalogRepository: DatalogRepository,
     private val uuidGenerator: UuidGenerator,
     private val rowParsingService: RowParsingService,
+
 ) {
     private val logger: Logger = LoggerFactory.getLogger(FileParsingService::class.java)
 
@@ -26,9 +29,18 @@ class FileParsingService(
 
         val sessionId = uuidGenerator.generate()
         fileLinesWithoutHeader.forEach { fileLine ->
-            val datalog = rowParsingService.parse(fileLine, sessionId)
-
             runBlocking {
+                val datalog = rowParsingService.parse(fileLine, sessionId)
+
+                if (datalog.sessionId != sessionId) {
+                    val oldDatalogs = datalogRepository.deleteBySessionIdAndEpochMilliseconds(
+                        datalog.sessionId,
+                        datalog.epochMilliseconds,
+                    )
+
+                    oldDatalogs.collect()
+                }
+
                 datalogRepository.save(datalog)
             }
         }
@@ -36,7 +48,7 @@ class FileParsingService(
         logger.info("File parsing completed for file: $fileName")
     }
 
-    fun removeHeaderRow(fileLines: List<String>): List<String> {
+    private fun removeHeaderRow(fileLines: List<String>): List<String> {
         return fileLines.drop(1)
     }
 }

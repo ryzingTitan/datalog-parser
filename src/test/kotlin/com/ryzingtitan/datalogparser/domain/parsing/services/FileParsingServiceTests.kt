@@ -13,6 +13,7 @@ import com.ryzingtitan.datalogparser.data.datalog.repositories.DatalogRepository
 import com.ryzingtitan.datalogparser.data.inputfile.repositories.InputFileRepository
 import com.ryzingtitan.datalogparser.domain.uuid.UuidGenerator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
@@ -33,13 +35,43 @@ class FileParsingServiceTests {
     inner class Parse {
         @Test
         fun `reads the input data and creates data log records`() = runTest {
+            whenever(mockRowParsingService.parse("data row 1", sessionId)).thenReturn(datalog)
             whenever(mockDatalogRepository.save(datalog)).thenReturn(datalog)
 
             fileParsingService.parse("testFile")
 
             verify(mockInputFileRepository, times(1)).getInputFileLines("testFile")
             verify(mockRowParsingService, times(1)).parse("data row 1", sessionId)
-            verify(mockDatalogRepository, times(1)).save(any())
+            verify(mockDatalogRepository, never()).deleteBySessionIdAndEpochMilliseconds(any(), any())
+            verify(mockDatalogRepository, times(1)).save(datalog)
+
+            assertEquals(2, appender.list.size)
+            assertEquals(Level.INFO, appender.list[0].level)
+            assertEquals("Beginning to parse file: testFile", appender.list[0].message)
+            assertEquals(Level.INFO, appender.list[0].level)
+            assertEquals("File parsing completed for file: testFile", appender.list[1].message)
+        }
+
+        @Test
+        fun `removes existing records before saving new records when updating existing sessions`() = runTest {
+            val existingSessionId = UUID.randomUUID()
+
+            whenever(mockRowParsingService.parse("data row 1", sessionId))
+                .thenReturn(datalog.copy(sessionId = existingSessionId))
+            whenever(
+                mockDatalogRepository
+                    .deleteBySessionIdAndEpochMilliseconds(existingSessionId, datalog.epochMilliseconds),
+            )
+                .thenReturn(flowOf(datalog.copy(sessionId = existingSessionId)))
+            whenever(mockDatalogRepository.save(datalog)).thenReturn(datalog)
+
+            fileParsingService.parse("testFile")
+
+            verify(mockInputFileRepository, times(1)).getInputFileLines("testFile")
+            verify(mockRowParsingService, times(1)).parse("data row 1", sessionId)
+            verify(mockDatalogRepository, times(1))
+                .deleteBySessionIdAndEpochMilliseconds(existingSessionId, datalog.epochMilliseconds)
+            verify(mockDatalogRepository, times(1)).save(datalog.copy(sessionId = existingSessionId))
 
             assertEquals(2, appender.list.size)
             assertEquals(Level.INFO, appender.list[0].level)
@@ -60,7 +92,6 @@ class FileParsingServiceTests {
 
         whenever(mockInputFileRepository.getInputFileLines("testFile")).thenReturn(listOf("header row", "data row 1"))
         whenever(mockUuidGenerator.generate()).thenReturn(sessionId)
-        whenever(mockRowParsingService.parse("data row 1", sessionId)).thenReturn(datalog)
 
         logger = LoggerFactory.getLogger(FileParsingService::class.java) as Logger
         appender = ListAppender()
