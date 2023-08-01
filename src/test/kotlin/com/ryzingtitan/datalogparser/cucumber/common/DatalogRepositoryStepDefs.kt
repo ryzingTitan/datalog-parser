@@ -1,6 +1,5 @@
 package com.ryzingtitan.datalogparser.cucumber.common
 
-import com.ryzingtitan.datalogparser.cucumber.components.StaticUuidGenerator.StaticUuidGeneratorSharedState.sessionId
 import com.ryzingtitan.datalogparser.data.datalog.entities.Data
 import com.ryzingtitan.datalogparser.data.datalog.entities.Datalog
 import com.ryzingtitan.datalogparser.data.datalog.entities.TrackInfo
@@ -26,8 +25,6 @@ class DatalogRepositoryStepDefs(private val datalogRepository: DatalogRepository
                 datalogRepository.save(existingDatalog)
             }
         }
-
-        sessionId = UUID.fromString("9628a8bb-0a44-4c31-af7d-a54ff16f080f")
     }
 
     @Then("the following datalogs will exist:")
@@ -39,13 +36,13 @@ class DatalogRepositoryStepDefs(private val datalogRepository: DatalogRepository
         val actualDatalogs = mutableListOf<Datalog>()
         runBlocking {
             datalogRepository.findAll().collect { datalog ->
-                actualDatalogs.add(datalog)
+                actualDatalogs.add(datalog.copy(id = null))
             }
         }
 
         assertEquals(
-            expectedDatalogs.sortedBy { it.epochMilliseconds },
-            actualDatalogs.sortedBy { it.epochMilliseconds },
+            expectedDatalogs.sortedBy { it.epochMilliseconds }.sortedBy { it.sessionId },
+            actualDatalogs.sortedBy { it.epochMilliseconds }.sortedBy { it.sessionId },
         )
     }
 

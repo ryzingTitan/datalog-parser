@@ -7,6 +7,7 @@ import com.ryzingtitan.datalogparser.data.datalog.entities.User
 import com.ryzingtitan.datalogparser.domain.parsing.configuration.ColumnConfiguration
 import com.ryzingtitan.datalogparser.domain.parsing.configuration.TrackInfoConfiguration
 import com.ryzingtitan.datalogparser.domain.parsing.configuration.UserConfiguration
+import com.ryzingtitan.datalogparser.domain.sessionmetadata.SessionMetadataService
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.time.ZoneId
@@ -16,20 +17,24 @@ import java.util.*
 @Service
 class RowParsingService(
     private val columnConfiguration: ColumnConfiguration,
-    private val userConfiguration: UserConfiguration,
     private val trackInfoConfiguration: TrackInfoConfiguration,
+    private val userConfiguration: UserConfiguration,
+    private val sessionMetadataService: SessionMetadataService,
 ) {
-    fun parse(row: String, sessionId: UUID): Datalog {
+    suspend fun parse(row: String, sessionId: UUID): Datalog {
         return createDatalog(row, sessionId)
     }
 
-    private fun createDatalog(row: String, sessionId: UUID): Datalog {
+    private suspend fun createDatalog(row: String, sessionId: UUID): Datalog {
         val lineColumns = row.split(',')
 
         val recordTimestamp = parseRowTimestamp(lineColumns[columnConfiguration.deviceTime])
 
         return Datalog(
-            sessionId = sessionId,
+            sessionId = sessionMetadataService.getExistingSessionId(
+                userConfiguration.email,
+                recordTimestamp.toEpochMilli(),
+            ) ?: sessionId,
             epochMilliseconds = recordTimestamp.toEpochMilli(),
             data = getData(lineColumns),
             trackInfo = getTrackInfo(),
